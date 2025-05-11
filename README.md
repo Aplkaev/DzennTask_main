@@ -7,11 +7,16 @@ with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) 
 
 ## Getting Started
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --no-cache` to build fresh images
-3. Run `docker compose up --pull always -d --wait` to set up and start a fresh Symfony project
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+```bash
+make build     # Собрать контейнеры без кэша
+make up        # Поднять контейнеры и дождаться их готовности
+make down      # Остановить и удалить контейнеры
+make migration-diff     # Сгенерировать новую миграцию на основе изменений в Entity
+make migration-migrate  # Выполнить все миграции
+make migration-status   # Посмотреть текущий статус миграций
+make migration-rollback # Откат последней миграции
+make init
+```
 
 ## Features
 
@@ -49,3 +54,5 @@ Symfony Docker is available under the MIT License.
 ## Credits
 
 Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+
+
