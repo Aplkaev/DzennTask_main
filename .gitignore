@@ -7,5 +7,6 @@
 /public/bundles/
 /var/
 /vendor/
-/db_data/
+/docker/db/
+/.vscode/
 ###< symfony/framework-bundle ###
