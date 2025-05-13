@@ -1,6 +1,7 @@
-# Makefile для управления Symfony-проектом через Docker Compose
+APP_CONTAINER_NAME = bonushelp-app
 
-PHP_CONTAINER = $(shell docker compose ps -q php)
+# Полный цикл: билд, ап, миграции
+init-ci: down build up
 
 # Команды Docker Compose
 build:
@@ -13,17 +14,17 @@ down:
 	docker compose down --remove-orphans
 
 # Doctrine команды
-migration-diff:
+migrations-diff:
 	docker compose exec php php bin/console doctrine:migrations:diff
 
 migration-migrate:
 	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
 
-migration-status:
+migrations-status:
 	docker compose exec php php bin/console doctrine:migrations:status
 
-migration-rollback:
+migrations-rollback:
 	docker compose exec php php bin/console doctrine:migrations:execute prev --down
 
-# Полный цикл: билд, ап, миграции
-init: build up migration-diff migration-migrate
+migrations-make:
+	docker compose exec php php bin/console make:migration

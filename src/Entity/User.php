@@ -1,0 +1,188 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
+class User extends BaseEntity
+{
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatarUrl = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $timezone = null;
+
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author', orphanRemoval: true)]
+    private Collection $content;
+
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $notifications;
+
+    /**
+     * @var Collection<int, ProjectUser>
+     */
+    #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'u', orphanRemoval: true)]
+    private Collection $projectUsers;
+
+    public function __construct()
+    {
+        $this->content = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->projectUsers = new ArrayCollection();
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getAvatarUrl(): ?string
+    {
+        return $this->avatarUrl;
+    }
+
+    public function setAvatarUrl(?string $avatarUrl): static
+    {
+        $this->avatarUrl = $avatarUrl;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?string $timezone): static
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getContent(): Collection
+    {
+        return $this->content;
+    }
+
+    public function addContent(Comment $content): static
+    {
+        if (!$this->content->contains($content)) {
+            $this->content->add($content);
+            $content->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Comment $content): static
+    {
+        if ($this->content->removeElement($content)) {
+            // set the owning side to null (unless already changed)
+            if ($content->getAuthor() === $this) {
+                $content->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectUser>
+     */
+    public function getProjectUsers(): Collection
+    {
+        return $this->projectUsers;
+    }
+
+    public function addProjectUser(ProjectUser $projectUser): static
+    {
+        if (!$this->projectUsers->contains($projectUser)) {
+            $this->projectUsers->add($projectUser);
+            $projectUser->setU($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectUser(ProjectUser $projectUser): static
+    {
+        if ($this->projectUsers->removeElement($projectUser)) {
+            // set the owning side to null (unless already changed)
+            if ($projectUser->getU() === $this) {
+                $projectUser->setU(null);
+            }
+        }
+
+        return $this;
+    }
+}

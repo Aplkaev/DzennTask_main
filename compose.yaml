@@ -63,7 +63,7 @@ services:
     ports:
       - 54321:5432
     volumes:
-      - ./db_data:/var/lib/postgresql/data:rw
+      - ./docker/db:/var/lib/postgresql/data:rw
 
   redis:
     image: redis:8.0-rc1-alpine
