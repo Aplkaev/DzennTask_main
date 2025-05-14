@@ -28,3 +28,11 @@ migrations-rollback:
 
 migrations-make:
 	docker compose exec php php bin/console make:migration
+
+# Запуск PHPStan анализа
+stan:
+	docker compose exec php vendor/bin/phpstan --memory-limit=-1 --configuration=./phpstan.neon
+
+# Исправление стиля
+cs-fix:
+	docker compose exec php vendor/bin/php-cs-fixer fix -vvv --show-progress=dots --allow-risky=yes
