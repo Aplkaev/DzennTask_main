@@ -90,7 +90,7 @@ class ApiResponse
     }
 
     /**
-     * @param BaseDto[] $collection
+     * @param BaseDto[]             $collection
      * @param string[]              $headers
      * @param mixed[]               $additional_fields
      */

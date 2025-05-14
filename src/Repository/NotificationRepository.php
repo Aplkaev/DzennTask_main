@@ -6,14 +6,11 @@ use App\Entity\Notification;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Notification>
- */
-class NotificationRepository extends ServiceEntityRepository
+class NotificationRepository extends BaseEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function entityClass(): string
     {
-        parent::__construct($registry, Notification::class);
+        return Notification::class;
     }
 
     //    /**

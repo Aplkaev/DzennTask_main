@@ -4,16 +4,13 @@ namespace App\Repository;
 
 use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Project>
- */
-class ProjectRepository extends ServiceEntityRepository
+
+class ProjectRepository extends BaseEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function entityClass(): string
     {
-        parent::__construct($registry, Project::class);
+        return Project::class;
     }
 
     //    /**

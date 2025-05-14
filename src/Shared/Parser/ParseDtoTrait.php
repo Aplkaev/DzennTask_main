@@ -89,7 +89,7 @@ trait ParseDtoTrait
     /**
      * @template T
      * @param class-string<T> $className
-    //  * @return T
+     * @return T
      */
     protected static function parseNullableResponseDto(string $className, mixed $value)
     {

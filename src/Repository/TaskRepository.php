@@ -6,14 +6,11 @@ use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Task>
- */
-class TaskRepository extends ServiceEntityRepository
+class TaskRepository extends BaseEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function entityClass(): string
     {
-        parent::__construct($registry, Task::class);
+        return Task::class;
     }
 
     //    /**

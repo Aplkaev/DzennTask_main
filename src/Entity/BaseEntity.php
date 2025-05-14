@@ -13,7 +13,7 @@ abstract class BaseEntity {
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    protected UuidV7 $id;
+    public UuidV7 $id;
 
     public function getId(): UuidV7
     {

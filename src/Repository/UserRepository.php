@@ -6,14 +6,12 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<User>
- */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends BaseEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function entityClass(): string
     {
-        parent::__construct($registry, User::class);
+        return User::class;
+        //
     }
 
     //    /**
