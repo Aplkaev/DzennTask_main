@@ -11,23 +11,26 @@ class Comment extends BaseEntity
 {
     #[ORM\ManyToOne(inversedBy: 'content')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
+    private User $author;
 
     #[ORM\Column(enumType: AllEntityTypeEnum::class)]
-    private ?AllEntityTypeEnum $entityType = null;
+    private AllEntityTypeEnum $entityType;
 
     #[ORM\ManyToOne]
     private ?Comment $parent = null;
 
     #[ORM\Column]
-    private ?int $entityId = null;
+    private int $entityId;
 
-    public function getAuthor(): ?User
+    #[ORM\Column(length: 255)]
+    private ?string $text = null;
+
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): static
+    public function setAuthor(User $author): static
     {
         $this->author = $author;
 
@@ -68,5 +71,17 @@ class Comment extends BaseEntity
     public function getParent(): ?Comment
     {
         return $this->parent;
+    }
+
+        public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(string $text): static
+    {
+        $this->text = $text;
+
+        return $this;
     }
 }

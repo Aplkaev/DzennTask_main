@@ -7,54 +7,44 @@ use App\Repository\ProjectUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectUserRepository::class)]
-class ProjectUser
+class ProjectUser extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\ManyToOne(inversedBy: 'projectUsers')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Project $project;
 
     #[ORM\ManyToOne(inversedBy: 'projectUsers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?project $project = null;
-
-    #[ORM\ManyToOne(inversedBy: 'projectUsers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $u = null;
+    private User $user;
 
     #[ORM\Column(enumType: RoleEnum::class)]
-    private ?RoleEnum $role = null;
+    private RoleEnum $role;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getProject(): ?project
+    public function getProject(): project
     {
         return $this->project;
     }
 
-    public function setProject(?project $project): static
+    public function setProject(project $project): static
     {
         $this->project = $project;
 
         return $this;
     }
 
-    public function getU(): ?User
+    public function getUser(): User
     {
-        return $this->u;
+        return $this->user;
     }
 
-    public function setU(?User $u): static
+    public function setUser(User $user): static
     {
-        $this->u = $u;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getRole(): ?RoleEnum
+    public function getRole(): RoleEnum
     {
         return $this->role;
     }

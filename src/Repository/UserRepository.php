@@ -11,7 +11,6 @@ class UserRepository extends BaseEntityRepository
     public function entityClass(): string
     {
         return User::class;
-        //
     }
 
     //    /**

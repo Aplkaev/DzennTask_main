@@ -116,12 +116,7 @@ class User extends BaseEntity
 
     public function removeContent(Comment $content): static
     {
-        if ($this->content->removeElement($content)) {
-            // set the owning side to null (unless already changed)
-            if ($content->getAuthor() === $this) {
-                $content->setAuthor(null);
-            }
-        }
+        $this->content->removeElement($content);
 
         return $this;
     }
@@ -146,12 +141,7 @@ class User extends BaseEntity
 
     public function removeNotification(Notification $notification): static
     {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getUser() === $this) {
-                $notification->setUser(null);
-            }
-        }
+        $this->notifications->removeElement($notification);
 
         return $this;
     }
@@ -168,7 +158,7 @@ class User extends BaseEntity
     {
         if (!$this->projectUsers->contains($projectUser)) {
             $this->projectUsers->add($projectUser);
-            $projectUser->setU($this);
+            $projectUser->setUser($this);
         }
 
         return $this;
@@ -176,12 +166,7 @@ class User extends BaseEntity
 
     public function removeProjectUser(ProjectUser $projectUser): static
     {
-        if ($this->projectUsers->removeElement($projectUser)) {
-            // set the owning side to null (unless already changed)
-            if ($projectUser->getU() === $this) {
-                $projectUser->setU(null);
-            }
-        }
+        $this->projectUsers->removeElement($projectUser);
 
         return $this;
     }
