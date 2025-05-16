@@ -10,7 +10,7 @@ class Notification extends BaseEntity
 {
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $user = null;
+    private User $user;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;

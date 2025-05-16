@@ -20,7 +20,7 @@ class Comment extends BaseEntity
     private ?Comment $parent = null;
 
     #[ORM\Column]
-    private int $entityId;
+    private string $entityId;
 
     #[ORM\Column(length: 255)]
     private ?string $text = null;
@@ -49,12 +49,12 @@ class Comment extends BaseEntity
         return $this;
     }
 
-    public function getEntityId(): ?int
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
 
-    public function setEntityId(int $entityId): static
+    public function setEntityId(string $entityId): static
     {
         $this->entityId = $entityId;
 

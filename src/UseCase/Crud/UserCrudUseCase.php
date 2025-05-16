@@ -21,12 +21,12 @@ class UserCrudUseCase extends AbstractCrudUseCase
 
     public function createEntityFromArray(array $data): mixed
     {
-
         $user = new User();
         // todo сохранение пароля
         $user->setEmail($data['email']);
         $user->setAvatarUrl($data['avatar_url']);
         $user->setTimezone($data['timezone']);
+        $user->setPassword('password');
 
         $this->repository->save($user);
 

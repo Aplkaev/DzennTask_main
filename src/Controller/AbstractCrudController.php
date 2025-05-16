@@ -22,7 +22,7 @@ abstract class AbstractCrudController {
         protected readonly AbstractCrudUseCase $abstractCrudUseCase
     ) {}
 
-    #[Route('', name: 'api_v1_blog_list', methods: ['GET'])]
+    #[Route('', methods: ['GET'])]
     public function index(): JsonResponse
     {
         $items = $this->abstractCrudUseCase->getAll($this->entityClass());

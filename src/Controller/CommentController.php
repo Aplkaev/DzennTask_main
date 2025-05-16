@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\UseCase\Crud\CommenCrudUseCase;
-use Dom\Comment;
 use App\Dto\CommentDto;
 use App\Dto\ProjectDto;
+use App\Entity\Comment;
 use App\Entity\Project;
+use App\UseCase\Crud\CommentCrudUseCase;
 use App\UseCase\Crud\ProjectCrudUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use App\UseCase\Crud\AbstractCrudUseCase;
@@ -20,10 +20,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CommentController extends AbstractCrudController {     
     public function __construct(
         protected EntityManagerInterface $em,
-        protected readonly CommenCrudUseCase $commenCrudUseCase
+        protected readonly CommentCrudUseCase $CommentCrudUseCase
     )
     {
-        parent::__construct($em, $commenCrudUseCase);
+        parent::__construct($em, $CommentCrudUseCase);
     }
 
     public function entityClass(): string
