@@ -17,7 +17,7 @@ down:
 migrations-diff:
 	docker compose exec php php bin/console doctrine:migrations:diff
 
-migration-migrate:
+migrations-migrate:
 	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
 
 migrations-status:
