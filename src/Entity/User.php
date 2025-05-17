@@ -2,20 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use PHPStan\Rules\Properties\SetNonVirtualPropertyHookAssignRule;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User extends BaseEntity
+class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    private string $password;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatarUrl = null;
@@ -41,11 +44,40 @@ class User extends BaseEntity
     #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'u', orphanRemoval: true)]
     private Collection $projectUsers;
 
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
     public function __construct()
     {
         $this->content = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->projectUsers = new ArrayCollection();
+    }
+
+    public function eraseCredentials(): void
+    {
+
+    }
+    
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) mb_strtolower($this->email);
     }
 
     public function getEmail(): ?string
@@ -60,7 +92,7 @@ class User extends BaseEntity
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }

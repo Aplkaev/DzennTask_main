@@ -37,7 +37,7 @@ abstract class AbstractCrudController extends AbstractController{
     public function show(string $id): JsonResponse
     {
         $item = $this->abstractCrudUseCase->getOne($this->entityClass(), $id);
-        return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize());
+        return new JsonResponse(data: $this->getDto()::fromModel($item)->jsonSerialize());
     }
 
     #[Route('', methods: ['POST'])]

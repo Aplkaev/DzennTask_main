@@ -26,7 +26,7 @@ abstract class AbstractCrudUseCase {
 
     public function create(string $entityClass, Request $request): mixed
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), associative: true);
         $item = $this->createEntityFromArray($data);
         $this->em->persist($item);
         $this->em->flush();
