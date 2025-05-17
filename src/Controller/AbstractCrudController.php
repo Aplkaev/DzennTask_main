@@ -6,15 +6,16 @@ namespace App\Controller;
 
 use App\Dto\BaseDto;
 use App\Entity\Project;
-use App\Shared\Parser\ParseDataTrait;
 use App\Shared\Response\ApiResponse;
-use App\UseCase\Crud\AbstractCrudUseCase;
+use App\Shared\Parser\ParseDataTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use App\UseCase\Crud\AbstractCrudUseCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class AbstractCrudController { 
+abstract class AbstractCrudController extends AbstractController{ 
     use ParseDataTrait;
 
     public function __construct(
