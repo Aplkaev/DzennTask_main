@@ -1,9 +1,6 @@
-# Symfony Docker
+# Dzentask
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
-
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+Dzentask — это минималистичный таск-менеджер, ориентированный на фокусировку, спокойствие и приоритет. Без перегрузки интерфейса, с поддержкой микросервисной архитектуры и real-time уведомлений через Centrifugo.
 
 ## Getting Started
 
@@ -19,6 +16,7 @@ make init
 ```
 
 ## Features
+![Schema](./Dzentask.png)
 
 * Production, development and CI ready
 * Just 1 service by default
@@ -50,9 +48,3 @@ make init
 ## License
 
 Symfony Docker is available under the MIT License.
-
-## Credits
-
-Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
-
-
