@@ -41,6 +41,10 @@ class Task extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'task', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?KanbanColumn $kanbanColumn = null;
+
     public function __construct() 
     { 
         $this->comments = new ArrayCollection();
@@ -162,6 +166,18 @@ class Task extends BaseEntity
     public function setStoryPounts(?int $storyPounts): static
     {
         $this->storyPounts = $storyPounts;
+
+        return $this;
+    }
+
+    public function getKanbanColumn(): ?KanbanColumn
+    {
+        return $this->kanbanColumn;
+    }
+
+    public function setKanbanColumn(?KanbanColumn $kanbanColumn): static
+    {
+        $this->kanbanColumn = $kanbanColumn;
 
         return $this;
     }

@@ -26,9 +26,16 @@ class Project extends BaseEntity
     #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $projectUsers;
 
+    /**
+     * @var Collection<int, KanbanColumn>
+     */
+    #[ORM\OneToMany(targetEntity: KanbanColumn::class, mappedBy: 'project')]
+    private Collection $kanbanColumns;
+
     public function __construct()
     {
         $this->projectUsers = new ArrayCollection();
+        $this->kanbanColumns = new ArrayCollection();
     }
 
     // #[ORM\OneToMany(mappedBy: 'project', targetEntity: ProjectUser::class)]
@@ -109,6 +116,36 @@ class Project extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($projectUser->getProject() === $this) {
                 $projectUser->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, KanbanColumn>
+     */
+    public function getKanbanColumns(): Collection
+    {
+        return $this->kanbanColumns;
+    }
+
+    public function addKanbanColumn(KanbanColumn $kanbanColumn): static
+    {
+        if (!$this->kanbanColumns->contains($kanbanColumn)) {
+            $this->kanbanColumns->add($kanbanColumn);
+            $kanbanColumn->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKanbanColumn(KanbanColumn $kanbanColumn): static
+    {
+        if ($this->kanbanColumns->removeElement($kanbanColumn)) {
+            // set the owning side to null (unless already changed)
+            if ($kanbanColumn->getProject() === $this) {
+                $kanbanColumn->setProject(null);
             }
         }
 
