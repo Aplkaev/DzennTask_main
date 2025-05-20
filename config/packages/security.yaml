@@ -10,9 +10,37 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+        login:
+            pattern: ^/api/login
+            stateless: true
+            provider: app_user_provider 
+            json_login:
+                check_path: /api/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        # refresh:
+        #     pattern: ^/api/token/refresh
+        #     stateless: true
+        #     refresh_jwt: ~
+        #     provider: app_user_provider
+        api:
+            pattern:   ^/api
+            stateless: true
+            provider: app_user_provider 
+            jwt: ~
+            logout:
+                path: api_token_logout
+
+        # refresh:
+        #     pattern: ^/api/token/refresh
+        #     stateless: true
+        #     refresh_jwt: ~
+        #     provider: app_user_provider
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
             provider: users_in_memory
@@ -23,11 +51,13 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    access_control:
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

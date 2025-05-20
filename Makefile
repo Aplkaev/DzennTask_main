@@ -36,3 +36,7 @@ stan:
 # Исправление стиля
 cs-fix:
 	docker compose exec php vendor/bin/php-cs-fixer fix -vvv --show-progress=dots --allow-risky=yes
+
+# generate jwt
+jwt-generate:
+	docker compose exec php php bin/console lexik:jwt:generate-keypair

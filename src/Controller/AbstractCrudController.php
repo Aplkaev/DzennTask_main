@@ -26,8 +26,9 @@ abstract class AbstractCrudController extends AbstractController{
     #[Route('', methods: ['GET'])]
     public function index(): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $items = $this->abstractCrudUseCase->getAll($this->entityClass());
-        // dd(self::parseResponseDtoList($this->getDto(), $items));
         return ApiResponse::responseList(
             self::parseResponseDtoList($this->getDto(), $items),
         );
@@ -36,6 +37,8 @@ abstract class AbstractCrudController extends AbstractController{
     #[Route('/{id}', methods: ['GET'])]
     public function show(string $id): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $item = $this->abstractCrudUseCase->getOne($this->entityClass(), $id);
         return new JsonResponse(data: $this->getDto()::fromModel($item)->jsonSerialize());
     }
@@ -43,6 +46,8 @@ abstract class AbstractCrudController extends AbstractController{
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $item = $this->abstractCrudUseCase->create($this->entityClass(), $request);
         return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize(), 201);
     }
@@ -50,6 +55,8 @@ abstract class AbstractCrudController extends AbstractController{
     #[Route('/{id}', methods: ['PUT', 'PATCH'])]
     public function update(string $id, Request $request): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $item = $this->abstractCrudUseCase->update($this->entityClass(), $id, $request);
         return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize());
     }
@@ -57,6 +64,8 @@ abstract class AbstractCrudController extends AbstractController{
     #[Route('/{id}', methods: ['DELETE'])]
     public function delete($id): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $this->abstractCrudUseCase->delete($this->entityClass(), $id);
         return new JsonResponse(null, 204);
     }

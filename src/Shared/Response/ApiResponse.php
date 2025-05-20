@@ -94,7 +94,7 @@ class ApiResponse
      * @param string[]              $headers
      * @param mixed[]               $additional_fields
      */
-    public static function responseList(array $collection, int $totalCount = null, array $headers = [], array $additional_fields = []): JsonResponse
+    public static function responseList(array $collection, ?int $totalCount = null, array $headers = [], array $additional_fields = []): JsonResponse
     {
         return new JsonResponse(
             data: [

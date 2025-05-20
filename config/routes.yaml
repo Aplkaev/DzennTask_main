@@ -4,3 +4,12 @@ api:
         namespace: App\Controller
     type: attribute
     prefix: /api
+
+### User auth
+login:
+    path: /api/login
+
+token_refresh:
+    path: /api/token/refresh
+
+#############################
