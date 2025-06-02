@@ -14,9 +14,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\UseCase\Crud\AbstractCrudUseCase;
 use App\UseCase\Crud\UserRegisterUseCase;
 use App\Controller\AbstractCrudController;
+use App\Dto\UserRegisterDto;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
 #[Route('/users')]
 class UserController extends AbstractCrudController {     
@@ -30,10 +32,9 @@ class UserController extends AbstractCrudController {
     }
 
     #[Route('/register', methods: ['POST'])]
-    public function register(Request $request): JsonResponse
+    public function register(Request $request, #[MapRequestPayload] UserRegisterDto $user): JsonResponse
     {
-        $data = json_decode($request->getContent(), associative: true);
-        $item = $this->userRegisterUseCase->execute($data);
+        $item = $this->userRegisterUseCase->execute($user);
        
         return new JsonResponse(data: $this->getDto()::fromModel($item)->jsonSerialize());
     }

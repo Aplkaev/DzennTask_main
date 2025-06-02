@@ -59,7 +59,6 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
 
     }
     
-
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -80,7 +79,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         return (string) mb_strtolower($this->email);
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
