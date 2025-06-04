@@ -9,10 +9,13 @@ use App\Entity\Project;
 use App\Entity\ProjectUser;
 use App\Entity\Task;
 use App\Enum\RoleEnum;
+use App\Shared\Parser\ParseDataTrait;
 use DateTime;
 
 final class ProjectUserDto extends BaseDto
 {
+    use ParseDataTrait;
+
     public function __construct(
         public readonly ?string $id,
         public readonly ?string $projectId,
@@ -22,11 +25,15 @@ final class ProjectUserDto extends BaseDto
     }
     public static function fromArray(array $data): static
     {
+        $roleEnum = null;
+        if($role = self::parseNullableString($data['role'])) { 
+            $roleEnum = RoleEnum::from($role);
+        }
         return new static(
-            id: $data['id'],
-            projectId: $data['project_id'],
-            userId: $data['user_id'],
-            role: RoleEnum::from($data['role'])
+            id: self::parseNullableString($data['id']),
+            projectId: self::parseString($data['project_id']),
+            userId: self::parseString($data['user_id']),
+            role: $roleEnum
         );
     }
 

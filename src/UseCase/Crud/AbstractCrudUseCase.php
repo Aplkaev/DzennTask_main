@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCase\Crud;
 
+use App\Dto\BaseDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,21 +25,19 @@ abstract class AbstractCrudUseCase {
         return $this->em->getRepository($entityClass)->find($id);
     }
 
-    public function create(string $entityClass, Request $request): mixed
+    public function create(string $entityClass, BaseDto $dto): mixed
     {
-        $data = json_decode($request->getContent(), associative: true);
-        $item = $this->createEntityFromArray($data);
+        $item = $this->createEntityFromArray($dto);
         $this->em->persist($item);
         $this->em->flush();
 
         return $item;
     }
 
-    public function update(string $entityClass, string $id, Request $request): mixed
+    public function update(string $entityClass, string $id, BaseDto $dto): mixed
     {
         $item = $this->em->getRepository($entityClass)->find($id);
-        $data = json_decode($request->getContent(), true);
-        $this->updateEntityFromArray($item, $data);
+        $this->updateEntityFromArray($item, $dto);
         $this->em->flush();
 
         return $item;
@@ -51,6 +50,6 @@ abstract class AbstractCrudUseCase {
         $this->em->flush();
     }
 
-    public abstract function createEntityFromArray(array $data): mixed;
-    public abstract function updateEntityFromArray(mixed $item, array $data): mixed;
+    public abstract function createEntityFromArray(BaseDto $dto): mixed;
+    public abstract function updateEntityFromArray(mixed $item, BaseDto $dto): mixed;
 }

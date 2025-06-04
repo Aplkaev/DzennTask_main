@@ -2,6 +2,7 @@
 
 namespace App\UseCase\Crud;
 
+use App\Dto\BaseDto;
 use App\Entity\Comment;
 use App\Entity\Project;
 use App\Enum\AllEntityTypeEnum;
@@ -23,11 +24,11 @@ class NotificationCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    public function createEntityFromArray(array $data): mixed
+    public function createEntityFromArray(BaseDto $dto): mixed
     {
         return null;
     }
-    public function updateEntityFromArray(mixed $comment, array $data): mixed
+    public function updateEntityFromArray(mixed $comment, BaseDto $dto): mixed
     {
         return null;
     }

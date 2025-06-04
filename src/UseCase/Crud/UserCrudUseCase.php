@@ -2,6 +2,8 @@
 
 namespace App\UseCase\Crud;
 
+use App\Dto\BaseDto;
+use App\Dto\UserDto;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
@@ -19,27 +21,27 @@ class UserCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    public function createEntityFromArray(array $data): mixed
+    public function createEntityFromArray(BaseDto|UserDto $dto): mixed
     {
         $user = new User();
         // todo сохранение пароля
-        $user->setEmail($data['email']);
-        $user->setAvatarUrl($data['avatar_url']);
-        $user->setTimezone($data['timezone']);
+        $user->setEmail($dto->email);
+        $user->setAvatarUrl($dto->avatarUrl);
+        $user->setTimezone($dto->timezone);
         $user->setPassword('password');
 
         $this->repository->save($user);
 
         return $user;
     }
-    public function updateEntityFromArray(mixed $user, array $data): mixed
+    public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): mixed
     {
         if($user instanceof User === false) { 
             throw new BadRequestException('Is not project item');
         }
         
-        $user->setAvatarUrl($data['avatar_url']);
-        $user->setTimezone($data['timezone']);
+        $user->setAvatarUrl($dto->avatarUrl);
+        $user->setTimezone($dto->timezone);
         
         $this->repository->save($user);
 

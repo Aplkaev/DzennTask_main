@@ -2,6 +2,8 @@
 
 namespace App\UseCase\Crud;
 
+use App\Dto\BaseDto;
+use App\Dto\ProjectUserDto;
 use App\Entity\Project;
 use App\Entity\ProjectUser;
 use App\Enum\RoleEnum;
@@ -24,50 +26,44 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    public function createEntityFromArray(array $data): mixed
+    public function createEntityFromArray(BaseDto|ProjectUserDto $dto): mixed
     {
         $project = null;
         $user = null;
         $role = null;
 
-        if($data['project_id']) { 
-            $project = $this->projectRepository->find($data['project_id']);
-            if($project === null) { 
-                // TODO вынести в свой exception
-                throw new NotFoundHttpException('Not found project:'.$data['project_id']);
-            }
+        $project = $this->projectRepository->find($dto->projectId);
+        if($project === null) { 
+            // TODO вынести в свой exception
+            throw new NotFoundHttpException("Not found project: {$dto->projectId}");
         }
-        if($data['user_id']) { 
-            $user = $this->userRepository->find($data['user_id']);
 
-            if($user === null) { 
-                // TODO вынести в свой exception
-                throw new NotFoundHttpException('Not found user:'.$data['user_id']);
-            }
+        $user = $this->userRepository->find($dto->userId);
+
+        if($user === null) { 
+            // TODO вынести в свой exception
+            throw new NotFoundHttpException("Not found user: {$dto->userId}");
         }
-        if($data['project_id']) { 
-            $role = RoleEnum::from($data['role']);
-        }
+    
 
         $projectUser = new ProjectUser();
         $projectUser->setProject($project);
-        $projectUser->setRole($role);
+        $projectUser->setRole($dto->role);
         $projectUser->setUser($user);
 
         $this->repository->save($projectUser);
 
         return $projectUser;
     }
-    public function updateEntityFromArray(mixed $project, array $data): mixed
+    public function updateEntityFromArray(mixed $projectUser, BaseDto|ProjectUserDto $dto): mixed
     {
-        if($project instanceof Project === false) { 
+        if($projectUser instanceof ProjectUser === false) { 
             throw new BadRequestException('Is not project item');
         }
         
-        $project->setDescription($data['description']);
-        $project->setTag($data['tag']);
+        $projectUser->setRole($dto->role);
         
-        $this->repository->save($project);
+        $this->repository->save($projectUser);
 
         return null;
     }

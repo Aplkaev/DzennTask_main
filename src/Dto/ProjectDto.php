@@ -6,39 +6,27 @@ namespace App\Dto;
 
 use App\Entity\BaseEntity;
 use App\Entity\Project;
+use App\Shared\Parser\ParseDataTrait;
 
 final class ProjectDto extends BaseDto
 {
-    private ?string $id{
-        get => $this->id;
-    }
-    private string $name{
-        get => $this->name;
-    }
-    private string $tag{
-        get => $this->tag;
-    }
-    private string $description{
-        get => $this->description;
-    }
+    use ParseDataTrait;
+
     public function __construct(
-        ?string $id,
-        string $name,
-        string $tag,
-        string $description,
+        public readonly ?string $id,
+        public readonly string $name,
+        public readonly ?string $tag,
+        public readonly ?string $description,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->tag = $tag;
-        $this->description = $description; 
     }
+    
     public static function fromArray(array $data): static
     {
         return new static(
-            id: $data['id'],
-            name: $data['name'],
-            tag: $data['tag'],
-            description: $data['description']
+            id: self::parseNullableString($data['id']),
+            name: self::parseString($data['name']),
+            tag: self::parseNullableString($data['tag']),
+            description: self::parseNullableString($data['description'])
         );
     }
 

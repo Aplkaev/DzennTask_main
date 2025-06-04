@@ -10,26 +10,36 @@ use App\Entity\Notification;
 use App\Entity\Project;
 use App\Entity\Task;
 use App\Enum\AllEntityTypeEnum;
+use App\Shared\Parser\ParseDataTrait;
 use DateTime;
 
 final class CommentDto extends BaseDto
 {
+    use ParseDataTrait;
+
     public function __construct(
         public readonly ?string $id,
         public readonly ?AllEntityTypeEnum $entityType,
         public readonly ?string $entityId,
         public readonly ?string $userId,
         public readonly ?string $text,
+        public readonly ?string $parentId,
     ) {
     }
     public static function fromArray(array $data): static
     {
+        $entityType = null;
+        if($type = self::parseNullableString($data['entity_type'])) { 
+            $entityType = AllEntityTypeEnum::from($type);
+        }
+
         return new static(
-            id: $data['id'],
-            entityType: $data['entity_type'],
-            entityId: $data['entity_id'],
-            userId: $data['user_id'],
-            text: $data['text'],
+            id: self::parseNullableString($data['id']),
+            entityType: $entityType,
+            entityId: self::parseNullableString($data['entity_id']),
+            userId: self::parseNullableString($data['user_id']),
+            text: self::parseString($data['text']),
+            parentId: self::parseNullableString($data['parent_id']),
         );
     }
 
@@ -41,6 +51,7 @@ final class CommentDto extends BaseDto
             entityId: $model->getEntityId(),
             userId: $model->getAuthor()->getStringId(),
             text: $model->getText(),
+            parentId: $model->getParent()->getStringId()
         );
     }
 
@@ -52,6 +63,7 @@ final class CommentDto extends BaseDto
             'text'=> $this->text,
             'entity_type'=> $this->entityType,
             'entity_id'=> $this->entityId,
+            'parent_id'=>$this->parentId
         ];
     }
 

@@ -6,9 +6,12 @@ namespace App\Dto;
 
 use App\Entity\BaseEntity;
 use App\Entity\User;
+use App\Shared\Parser\ParseDataTrait;
 
 final class UserDto extends BaseDto
 {
+    use ParseDataTrait;
+
     public function __construct(
         public readonly ?string $id,
         public string $email
@@ -25,10 +28,10 @@ final class UserDto extends BaseDto
     public static function fromArray(array $data): static
     {
         return new static(
-            id: $data['id'],
-            email: $data['email'],
-            avatarUrl: $data['avatar_url'],
-            timezone: $data['timezone']
+            id: self::parseNullableString($data['id']),
+            email: self::parseString($data['email']),
+            avatarUrl: self::parseNullableString($data['avatar_url']),
+            timezone: self::parseNullableString($data['timezone'])
         );
     }
 

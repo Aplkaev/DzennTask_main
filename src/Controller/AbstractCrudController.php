@@ -48,7 +48,12 @@ abstract class AbstractCrudController extends AbstractController{
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $item = $this->abstractCrudUseCase->create($this->entityClass(), $request);
+        /**
+         * @var BaseDto $dto
+         */
+        $dto = $this->getDto()::fromArray($request->getContent());
+
+        $item = $this->abstractCrudUseCase->create($this->entityClass(), $dto);
         return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize(), 201);
     }
 
@@ -57,7 +62,12 @@ abstract class AbstractCrudController extends AbstractController{
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $item = $this->abstractCrudUseCase->update($this->entityClass(), $id, $request);
+        /**
+         * @var BaseDto $dto
+         */
+        $dto = $this->getDto()::fromArray($request->getContent());
+
+        $item = $this->abstractCrudUseCase->update($this->entityClass(), $id, $dto);
         return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize());
     }
 
