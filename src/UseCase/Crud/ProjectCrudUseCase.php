@@ -30,7 +30,7 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    public function getAll(string $entityClass): mixed
+    public function getAll(string $entityClass): array
     {
         return $this->getProjectsUserUseCase->execute();
     }

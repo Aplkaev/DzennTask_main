@@ -6,11 +6,12 @@ namespace App\UseCase\Project;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use App\UseCase\User\UserAuthUseCase;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class GetProjectsUserUseCase{
     public function __construct(
-        private readonly Security $security,
+        private readonly UserAuthUseCase $userAuthUseCase,
         private readonly ProjectRepository $projectRepository
     ){}
 
@@ -19,7 +20,7 @@ class GetProjectsUserUseCase{
      */
     public function execute(): array
     {
-        $user = $this->security->getUser();
+        $user = $this->userAuthUseCase->execute()->getUser();
 
         return $this->projectRepository->createQueryBuilder('p')
         ->leftJoin('p.projectUsers','pu')
