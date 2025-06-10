@@ -64,7 +64,7 @@ class ApiResponse
     public static function error(string $message = 'error', int $status = Response::HTTP_UNPROCESSABLE_ENTITY): JsonResponse
     {
         return new JsonResponse(
-            data: ['message' => $message],
+            data: ['error' => $message],
             status: $status,
         );
     }
