@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Dto\BaseDto;
-use App\Entity\Project;
 use App\Shared\Response\ApiResponse;
 use App\Shared\Parser\ParseDataTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use App\UseCase\Crud\AbstractCrudUseCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractCrudController extends AbstractController{ 
     use ParseDataTrait;
@@ -27,8 +28,13 @@ abstract class AbstractCrudController extends AbstractController{
     public function index(): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
+        try { 
+            $items = $this->abstractCrudUseCase->getAll($this->entityClass());
 
-        $items = $this->abstractCrudUseCase->getAll($this->entityClass());
+        } catch(NotFoundHttpException $e) { 
+            return ApiResponse::error($e->getMessage(), Response::HTTP_NOT_FOUND);
+        }
         return ApiResponse::responseList(
             self::parseResponseDtoList($this->getDto(), $items),
         );
@@ -38,8 +44,12 @@ abstract class AbstractCrudController extends AbstractController{
     public function show(string $id): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        try { 
+           $item = $this->abstractCrudUseCase->getOne($this->entityClass(), $id);
 
-        $item = $this->abstractCrudUseCase->getOne($this->entityClass(), $id);
+        } catch(NotFoundHttpException $e) { 
+            return ApiResponse::error($e->getMessage(), Response::HTTP_NOT_FOUND);
+        }
         return new JsonResponse(data: $this->getDto()::fromModel($item)->jsonSerialize());
     }
 
@@ -48,10 +58,11 @@ abstract class AbstractCrudController extends AbstractController{
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        $data = json_decode($request->getContent(), true);
         /**
          * @var BaseDto $dto
          */
-        $dto = $this->getDto()::fromArray($request->getContent());
+        $dto = $this->getDto()::fromArray($data);
 
         $item = $this->abstractCrudUseCase->create($this->entityClass(), $dto);
         return new JsonResponse($this->getDto()::fromModel($item)->jsonSerialize(), 201);
