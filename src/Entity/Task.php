@@ -42,7 +42,7 @@ class Task extends BaseEntity
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?KanbanColumn $kanbanColumn = null;
 
     public function __construct() 
