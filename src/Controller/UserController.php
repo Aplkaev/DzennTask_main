@@ -15,6 +15,8 @@ use App\UseCase\Crud\AbstractCrudUseCase;
 use App\UseCase\Crud\UserRegisterUseCase;
 use App\Controller\AbstractCrudController;
 use App\Dto\UserRegisterDto;
+use App\UseCase\User\UserAuthUseCase;
+use Doctrine\ORM\Mapping\PrePersist;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +27,8 @@ class UserController extends AbstractCrudController {
     public function __construct(
         protected EntityManagerInterface $em,
         protected readonly UserCrudUseCase $crudUseCase,
-        protected readonly UserRegisterUseCase $userRegisterUseCase
+        protected readonly UserRegisterUseCase $userRegisterUseCase,
+        protected readonly UserAuthUseCase $userAuthUseCase
     )
     {
         parent::__construct($em, $crudUseCase);
@@ -37,6 +40,14 @@ class UserController extends AbstractCrudController {
         $item = $this->userRegisterUseCase->execute($user);
        
         return new JsonResponse(data: $this->getDto()::fromModel($item)->jsonSerialize());
+    }
+
+    #[Route('/me', methods: ['GET'])]
+    public function me(Request $request): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->userAuthUseCase->execute()->getUser();
+        return new JsonResponse(data: $this->getDto()::fromModel($user)->jsonSerialize());
     }
 
     public function entityClass(): string
