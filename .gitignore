@@ -9,6 +9,7 @@
 /vendor/
 /docker/db/
 /.vscode/
+/.idea/
 ###< symfony/framework-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###
