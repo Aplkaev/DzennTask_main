@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\Task\TaskStatusEnum;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,8 +18,8 @@ class Task extends BaseEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descrition = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(enumType: TaskStatusEnum::class)]
+    private ?TaskStatusEnum $status = null;
 
     #[ORM\Column]
     private ?int $priority = null;
@@ -122,12 +123,12 @@ class Task extends BaseEntity
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?TaskStatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(?TaskStatusEnum $status): static
     {
         $this->status = $status;
 

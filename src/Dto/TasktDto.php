@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use App\Entity\BaseEntity;
-use App\Entity\Project;
-use App\Entity\Task;
-use App\Shared\Parser\ParseDataTrait;
 use DateTime;
+use App\Entity\Task;
 use DateTimeImmutable;
+use App\Entity\Project;
+use App\Entity\BaseEntity;
+use App\Enum\Task\TaskStatusEnum;
+use App\Shared\Parser\ParseDataTrait;
 
 final class TasktDto extends BaseDto
 {
@@ -19,7 +20,7 @@ final class TasktDto extends BaseDto
         public readonly ?string $id,
         public readonly ?string $title,
         public readonly ?string $description,
-        public readonly ?string $status,
+        public readonly ?TaskStatusEnum $status,
         public readonly ?int $priority,
         public readonly ?DateTimeImmutable $deadline,
         public readonly ?int $storyPounts,
@@ -30,11 +31,16 @@ final class TasktDto extends BaseDto
     }
     public static function fromArray(array $data): static
     {
+        $status = null;
+        if($statusString = self::parseNullableString($data['status'])) { 
+            $status = TaskStatusEnum::tryFrom($statusString);
+        }
+        
         return new static(
             id: self::parseNullableString($data['id']),
             title:self::parseNullableString($data['title']),
             description: self::parseNullableString($data['description']),
-            status: self::parseNullableString($data['status']),
+            status: $status,
             priority: self::parseNullableInt($data['priority']),
             deadline: self::parseNullableDateTimeImmutable($data['deadline']),
             storyPounts: self::parseNullableString($data['story_pounts']),
