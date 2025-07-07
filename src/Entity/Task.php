@@ -15,7 +15,7 @@ class Task extends BaseEntity
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 10000, nullable: true)]
     private ?string $descrition = null;
 
     #[ORM\Column(enumType: TaskStatusEnum::class)]
@@ -28,7 +28,7 @@ class Task extends BaseEntity
     private ?\DateTime $deadline = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $storyPounts = null;
+    private ?int $storyPoints = null;
 
     #[ORM\ManyToOne]
     private ?Task $parent = null;
@@ -159,14 +159,14 @@ class Task extends BaseEntity
         return $this;
     }
 
-    public function getStoryPounts(): ?int
+    public function getStoryPoints(): ?int
     {
-        return $this->storyPounts;
+        return $this->storyPoints;
     }
 
-    public function setStoryPounts(?int $storyPounts): static
+    public function setStoryPoints(?int $storyPoints): static
     {
-        $this->storyPounts = $storyPounts;
+        $this->storyPoints = $storyPoints;
 
         return $this;
     }

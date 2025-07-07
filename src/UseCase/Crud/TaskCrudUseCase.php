@@ -48,7 +48,7 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         $task->setDescrition($dto->description);
         $task->setTitle($dto->title);
         $task->setStatus($dto->status);
-        $task->setStoryPounts($dto->storyPounts);
+        $task->setStoryPoints($dto->storyPouits);
         // $task->setKanbanColumn($dto->k)
 
 
@@ -67,7 +67,7 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         $task->setDescrition($dto->description);
         $task->setTitle($dto->title);
         $task->setStatus($dto->status);
-        $task->setStoryPounts($dto->storyPounts);
+        $task->setStoryPoints($dto->storyPoints);
         // $task->setKanbanColumn($dto->k)
 
         $this->taskRepository->save($task);

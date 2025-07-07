@@ -23,7 +23,7 @@ final class TasktDto extends BaseDto
         public readonly ?TaskStatusEnum $status,
         public readonly ?int $priority,
         public readonly ?DateTimeImmutable $deadline,
-        public readonly ?int $storyPounts,
+        public readonly ?int $storyPoints,
         public readonly ?string $parentId,
         public readonly string $assignedToId,
         public readonly string $projectId,
@@ -43,7 +43,7 @@ final class TasktDto extends BaseDto
             status: $status,
             priority: self::parseNullableInt($data['priority']),
             deadline: self::parseNullableDateTimeImmutable($data['deadline']),
-            storyPounts: self::parseNullableString($data['story_pounts']),
+            storyPoints: self::parseNullableString($data['story_points']),
             parentId: self::parseNullableString($data['parent_id']),
             assignedToId: self::parseString($data['assigned_to_id']),
             projectId: self::parseString($data['project_id'])
@@ -59,7 +59,7 @@ final class TasktDto extends BaseDto
             status: $model->getStatus(),
             priority: $model->getPriority(),
             deadline: $model->getDeadline(),
-            storyPounts: $model->getStoryPounts(),
+            storyPoints: $model->getStoryPoints(),
             parentId: $model->getParent()?->getStringId(),
             assignedToId: $model->getAssgnedTo()->getStringId(),
             projectId: $model->getProject()->getStringId()
@@ -75,7 +75,7 @@ final class TasktDto extends BaseDto
             'status'=> $this->status,
             'priority'=> $this->priority,
             'deadline'=> $this->deadline,
-            'story_pounts'=> $this->storyPounts,
+            'story_pounts'=> $this->storyPoints,
             'parent_id'=> $this->parentId,
             'assigned_to_id'=> $this->assignedToId,
             'project_id'=>$this->projectId
