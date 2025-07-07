@@ -14,11 +14,10 @@ final class UserDto extends BaseDto
 
     public function __construct(
         public readonly ?string $id,
-        public string $email
-        {
-            get  { return mb_strtolower($this->email);}
+        public string $email {
+            get  { return mb_strtolower($this->email); }
 
-            set { $this->email = mb_strtolower($value);}
+            set { $this->email = mb_strtolower($value); }
         },
         public readonly ?string $avatarUrl,
         public readonly ?string $timezone,
@@ -48,11 +47,10 @@ final class UserDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=>$this->id,
-            'email'=> $this->email,
-            'avatarUrl'=> $this->avatarUrl,
-            'timezone'=> $this->timezone
+            'id' => $this->id,
+            'email' => $this->email,
+            'avatarUrl' => $this->avatarUrl,
+            'timezone' => $this->timezone,
         ];
     }
-
 }

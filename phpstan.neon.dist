@@ -1,0 +1,13 @@
+parameters:
+    level: 9
+    checkMissingIterableValueType: true
+    checkMissingCallableSignature: true
+    checkGenericClassInNonGenericObjectType: true
+    paths:
+        - src
+    autoload_files:
+        - %rootDir%/../../../vendor/autoload.php
+
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon # если Symfony
+    

@@ -7,16 +7,15 @@ namespace App\UseCase\Crud;
 use App\Dto\BaseDto;
 use App\Entity\BaseEntity;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-abstract class AbstractCrudUseCase {
+abstract class AbstractCrudUseCase
+{
     public function __construct(
-        protected EntityManagerInterface $em
-    ){
-        
+        protected EntityManagerInterface $em,
+    ) {
     }
-    
+
     /**
      * @return BaseEntity[]
      */
@@ -24,7 +23,7 @@ abstract class AbstractCrudUseCase {
     {
         $entitys = $this->em->getRepository($entityClass)->findAll();
 
-        if($entitys === null) { 
+        if (null === $entitys) {
             throw new NotFoundHttpException('Not found');
         }
 
@@ -35,10 +34,10 @@ abstract class AbstractCrudUseCase {
     {
         $entity = $this->em->getRepository($entityClass)->find($id);
 
-        if($entity === null) { 
+        if (null === $entity) {
             throw new NotFoundHttpException('Not found');
         }
-        
+
         return $entity;
     }
 
@@ -67,6 +66,7 @@ abstract class AbstractCrudUseCase {
         $this->em->flush();
     }
 
-    public abstract function createEntityFromArray(BaseDto $dto): mixed;
-    public abstract function updateEntityFromArray(mixed $item, BaseDto $dto): mixed;
+    abstract public function createEntityFromArray(BaseDto $dto): mixed;
+
+    abstract public function updateEntityFromArray(mixed $item, BaseDto $dto): mixed;
 }

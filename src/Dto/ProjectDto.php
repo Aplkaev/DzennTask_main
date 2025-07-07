@@ -19,7 +19,7 @@ final class ProjectDto extends BaseDto
         public readonly ?string $description,
     ) {
     }
-    
+
     public static function fromArray(array $data): static
     {
         return new static(
@@ -43,11 +43,10 @@ final class ProjectDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'tag'=>$this->tag,
-            'description'=>$this->description
+            'id' => $this->id,
+            'name' => $this->name,
+            'tag' => $this->tag,
+            'description' => $this->description,
         ];
     }
-
 }

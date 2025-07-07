@@ -4,9 +4,7 @@ namespace App\UseCase\Crud;
 
 use App\Dto\BaseDto;
 use App\Dto\ProjectUserDto;
-use App\Entity\Project;
 use App\Entity\ProjectUser;
-use App\Enum\RoleEnum;
 use App\Repository\ProjectRepository;
 use App\Repository\ProjectUserRepository;
 use App\Repository\UserRepository;
@@ -20,9 +18,8 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
         EntityManagerInterface $em,
         protected readonly ProjectUserRepository $repository,
         protected readonly ProjectRepository $projectRepository,
-        protected readonly UserRepository $userRepository
-    )
-    {
+        protected readonly UserRepository $userRepository,
+    ) {
         parent::__construct($em);
     }
 
@@ -33,18 +30,17 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
         $role = null;
 
         $project = $this->projectRepository->find($dto->projectId);
-        if($project === null) { 
+        if (null === $project) {
             // TODO вынести в свой exception
             throw new NotFoundHttpException("Not found project: {$dto->projectId}");
         }
 
         $user = $this->userRepository->find($dto->userId);
 
-        if($user === null) { 
+        if (null === $user) {
             // TODO вынести в свой exception
             throw new NotFoundHttpException("Not found user: {$dto->userId}");
         }
-    
 
         $projectUser = new ProjectUser();
         $projectUser->setProject($project);
@@ -55,14 +51,15 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
 
         return $projectUser;
     }
+
     public function updateEntityFromArray(mixed $projectUser, BaseDto|ProjectUserDto $dto): mixed
     {
-        if($projectUser instanceof ProjectUser === false) { 
+        if (false === $projectUser instanceof ProjectUser) {
             throw new BadRequestException('Is not project item');
         }
-        
+
         $projectUser->setRole($dto->role);
-        
+
         $this->repository->save($projectUser);
 
         return null;

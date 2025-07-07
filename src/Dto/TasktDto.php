@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use DateTime;
-use App\Entity\Task;
-use DateTimeImmutable;
-use App\Entity\Project;
 use App\Entity\BaseEntity;
+use App\Entity\Task;
 use App\Enum\Task\TaskStatusEnum;
 use App\Shared\Parser\ParseDataTrait;
 
@@ -22,23 +19,24 @@ final class TasktDto extends BaseDto
         public readonly ?string $description,
         public readonly ?TaskStatusEnum $status,
         public readonly ?int $priority,
-        public readonly ?DateTimeImmutable $deadline,
+        public readonly ?\DateTimeImmutable $deadline,
         public readonly ?int $storyPoints,
         public readonly ?string $parentId,
         public readonly string $assignedToId,
         public readonly string $projectId,
     ) {
     }
+
     public static function fromArray(array $data): static
     {
         $status = null;
-        if($statusString = self::parseNullableString($data['status'])) { 
+        if ($statusString = self::parseNullableString($data['status'])) {
             $status = TaskStatusEnum::tryFrom($statusString);
         }
-        
+
         return new static(
             id: self::parseNullableString($data['id']),
-            title:self::parseNullableString($data['title']),
+            title: self::parseNullableString($data['title']),
             description: self::parseNullableString($data['description']),
             status: $status,
             priority: self::parseNullableInt($data['priority']),
@@ -69,17 +67,16 @@ final class TasktDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=> $this->id,
-            'title'=> $this->title,
-            'description'=> $this->description,
-            'status'=> $this->status,
-            'priority'=> $this->priority,
-            'deadline'=> $this->deadline,
-            'story_pounts'=> $this->storyPoints,
-            'parent_id'=> $this->parentId,
-            'assigned_to_id'=> $this->assignedToId,
-            'project_id'=>$this->projectId
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status,
+            'priority' => $this->priority,
+            'deadline' => $this->deadline,
+            'story_pounts' => $this->storyPoints,
+            'parent_id' => $this->parentId,
+            'assigned_to_id' => $this->assignedToId,
+            'project_id' => $this->projectId,
         ];
     }
-
 }

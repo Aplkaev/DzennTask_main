@@ -6,9 +6,6 @@ namespace App\Dto;
 
 use App\Entity\BaseEntity;
 use App\Entity\Notification;
-use App\Entity\Project;
-use App\Entity\Task;
-use DateTime;
 
 final class NotificationDto extends BaseDto
 {
@@ -20,6 +17,7 @@ final class NotificationDto extends BaseDto
         public readonly ?bool $isRead,
     ) {
     }
+
     public static function fromArray(array $data): static
     {
         return new static(
@@ -45,12 +43,11 @@ final class NotificationDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=> $this->id,
-            'type'=> $this->type,
-            'user_id'=> $this->userId,
-            'text'=> $this->text,
-            'is_read'=> $this->isRead
+            'id' => $this->id,
+            'type' => $this->type,
+            'user_id' => $this->userId,
+            'text' => $this->text,
+            'is_read' => $this->isRead,
         ];
     }
-
 }

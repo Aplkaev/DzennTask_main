@@ -4,9 +4,7 @@ namespace App\UseCase\Crud;
 
 use App\Dto\BaseDto;
 use App\Dto\UserDto;
-use App\Entity\Project;
 use App\Entity\User;
-use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -15,9 +13,8 @@ class UserCrudUseCase extends AbstractCrudUseCase
 {
     public function __construct(
         EntityManagerInterface $em,
-        protected readonly UserRepository $repository
-    )
-    {
+        protected readonly UserRepository $repository,
+    ) {
         parent::__construct($em);
     }
 
@@ -34,15 +31,16 @@ class UserCrudUseCase extends AbstractCrudUseCase
 
         return $user;
     }
+
     public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): mixed
     {
-        if($user instanceof User === false) { 
+        if (false === $user instanceof User) {
             throw new BadRequestException('Is not project item');
         }
-        
+
         $user->setAvatarUrl($dto->avatarUrl);
         $user->setTimezone($dto->timezone);
-        
+
         $this->repository->save($user);
 
         return $user;

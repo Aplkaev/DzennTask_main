@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: KanbanColumnRepository::class)]
 class KanbanColumn extends BaseEntity
-{    
+{
     #[ORM\Column(length: 255)]
     private string $name;
 

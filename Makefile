@@ -40,3 +40,9 @@ cs-fix:
 # generate jwt
 jwt-generate:
 	docker compose exec php php bin/console lexik:jwt:generate-keypair
+
+static-analyse:
+	docker compose exec php vendor/bin/phpstan --memory-limit=-1 --configuration=./phpstan.neon --no-progress
+
+cs-fix:
+	docker compose exec php vendor/bin/php-cs-fixer fix --cache-file=.php-cs-fixer.cache --show-progress=none --allow-risky=yes

@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project extends BaseEntity
 {
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -51,7 +50,7 @@ class Project extends BaseEntity
     //     return $this;
     // }
 
-    // public function getProjetUsers(): Collection 
+    // public function getProjetUsers(): Collection
     // {
     //     return $this->projectUsers;
     // }

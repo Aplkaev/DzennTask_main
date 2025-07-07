@@ -5,16 +5,12 @@ namespace App\UseCase\Crud;
 use App\Dto\BaseDto;
 use App\Dto\CommentDto;
 use App\Entity\Comment;
-use App\Entity\Project;
-use App\Enum\AllEntityTypeEnum;
-use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
-use App\Repository\ProjectRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Bundle\MakerBundle\Maker\Common\EntityIdTypeEnum;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentCrudUseCase extends AbstractCrudUseCase
 {
@@ -23,8 +19,7 @@ class CommentCrudUseCase extends AbstractCrudUseCase
         protected readonly CommentRepository $repository,
         protected readonly UserRepository $userRepository,
         protected readonly Security $security,
-    )
-    {
+    ) {
         parent::__construct($em);
     }
 
@@ -37,14 +32,14 @@ class CommentCrudUseCase extends AbstractCrudUseCase
         $user = $this->security->getUser();
         $entity = null;
 
-        if($dto->parentId) { 
+        if ($dto->parentId) {
             // TODO вынести в useCase с exception
             $parent = $this->repository->find($dto->parentId);
         }
 
-        if($dto->entityType && $dto->entityId) { 
+        if ($dto->entityType && $dto->entityId) {
             $entity = $this->em->getRepository($dto->entityType->value)->find($dto->entityId);
-            if($entity === null) { 
+            if (null === $entity) {
                 // TODO вынести в свой exception
                 throw new NotFoundHttpException("Not found entity: {$dto->entityId} entoty_type:{$dto->entityType}");
             }
@@ -61,14 +56,15 @@ class CommentCrudUseCase extends AbstractCrudUseCase
 
         return $comment;
     }
+
     public function updateEntityFromArray(mixed $comment, BaseDto|CommentDto $dto): mixed
     {
-        if($comment instanceof Comment === false) { 
+        if (false === $comment instanceof Comment) {
             throw new BadRequestException('Is not comment item');
         }
-        //
+
         $comment->setText($dto->text);
-        
+
         $this->repository->save($comment);
 
         return $comment;

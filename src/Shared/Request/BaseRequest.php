@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class BaseRequest
 {
     public function __construct(
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 

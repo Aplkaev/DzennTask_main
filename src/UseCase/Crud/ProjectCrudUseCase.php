@@ -11,10 +11,9 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Enum\RoleEnum;
 use App\Repository\ProjectRepository;
+use App\UseCase\Project\GetProjectsUserUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use App\UseCase\Crud\ProjectUserCrudUseCase;
-use App\UseCase\Project\GetProjectsUserUseCase;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class ProjectCrudUseCase extends AbstractCrudUseCase
@@ -24,9 +23,8 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         protected readonly ProjectRepository $projectRepository,
         protected readonly GetProjectsUserUseCase $getProjectsUserUseCase,
         protected readonly Security $security,
-        protected readonly ProjectUserCrudUseCase $projectUserCrudUseCase
-    )
-    {
+        protected readonly ProjectUserCrudUseCase $projectUserCrudUseCase,
+    ) {
         parent::__construct($em);
     }
 
@@ -37,8 +35,8 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
 
     public function createEntityFromArray(BaseDto|ProjectDto $dto): mixed
     {
-        $hasProject = $this->projectRepository->findOneBy(['name'=>$dto->name]);
-        if($hasProject) { 
+        $hasProject = $this->projectRepository->findOneBy(['name' => $dto->name]);
+        if ($hasProject) {
             throw new BadRequestException("Project name: {$dto->name} already exists");
         }
 
@@ -63,15 +61,16 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
 
         return $project;
     }
+
     public function updateEntityFromArray(mixed $project, BaseDto|ProjectDto $dto): mixed
     {
-        if($project instanceof Project === false) { 
+        if (false === $project instanceof Project) {
             throw new BadRequestException('Is not project item');
         }
-        
+
         $project->setDescription($dto->description);
         $project->setTag($dto->tag);
-        
+
         $this->projectRepository->save($project);
 
         return $project;

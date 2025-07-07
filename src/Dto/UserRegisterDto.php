@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
+use App\Entity\BaseEntity;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\BaseEntity;
 
 final class UserRegisterDto extends BaseDto
 {
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Length(min: 2, max: 500)]
-        public string $email
-        {
+        public string $email {
             get => mb_strtolower($this->email);
             set => $this->email = mb_strtolower($value);
         },
@@ -44,9 +43,8 @@ final class UserRegisterDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=>$this->id,
-            'email'=> $this->email,
+            'id' => $this->id,
+            'email' => $this->email,
         ];
     }
-
 }

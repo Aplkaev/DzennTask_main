@@ -73,7 +73,7 @@ class Comment extends BaseEntity
         return $this->parent;
     }
 
-        public function getText(): ?string
+    public function getText(): ?string
     {
         return $this->text;
     }

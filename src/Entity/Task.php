@@ -3,15 +3,14 @@
 namespace App\Entity;
 
 use App\Enum\Task\TaskStatusEnum;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task extends BaseEntity
 {
-
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -46,8 +45,8 @@ class Task extends BaseEntity
     #[ORM\JoinColumn(nullable: true)]
     private ?KanbanColumn $kanbanColumn = null;
 
-    public function __construct() 
-    { 
+    public function __construct()
+    {
         $this->comments = new ArrayCollection();
     }
 
@@ -75,7 +74,7 @@ class Task extends BaseEntity
         return $this->assignedTo;
     }
 
-    public function setProject(Project $project): static 
+    public function setProject(Project $project): static
     {
         $this->project = $project;
 

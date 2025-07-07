@@ -5,20 +5,13 @@ declare(strict_types=1);
 namespace App\UseCase\Crud;
 
 use App\Dto\BaseDto;
-use App\Entity\Task;
-use App\Entity\User;
 use App\Dto\TasktDto;
-use App\Enum\RoleEnum;
-use App\Dto\ProjectDto;
-use App\Entity\Project;
-use App\Dto\ProjectUserDto;
+use App\Entity\Task;
+use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
-use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use App\UseCase\Crud\ProjectUserCrudUseCase;
-use App\UseCase\Project\GetProjectsUserUseCase;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class TaskCrudUseCase extends AbstractCrudUseCase
@@ -28,9 +21,8 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         protected readonly TaskRepository $taskRepository,
         protected readonly Security $security,
         protected readonly ProjectRepository $projectRepository,
-        protected readonly UserRepository $userRepository
-    )
-    {
+        protected readonly UserRepository $userRepository,
+    ) {
         parent::__construct($em);
     }
 
@@ -38,7 +30,6 @@ class TaskCrudUseCase extends AbstractCrudUseCase
     {
         $project = $this->projectRepository->find($dto->projectId);
         $user = $this->userRepository->find($dto->assignedToId);
-
 
         $task = new Task();
         $task->setAssgnedTo($user);
@@ -51,17 +42,17 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         $task->setStoryPoints($dto->storyPouits);
         // $task->setKanbanColumn($dto->k)
 
-
         $this->taskRepository->save($task);
 
         return $task;
     }
+
     public function updateEntityFromArray(mixed $task, BaseDto|TasktDto $dto): mixed
     {
-        if($task instanceof Task === false) { 
+        if (false === $task instanceof Task) {
             throw new BadRequestException('Is not project item');
         }
-        
+
         $task->setDeadline($dto->deadline);
         $task->setPriority($dto->priority);
         $task->setDescrition($dto->description);

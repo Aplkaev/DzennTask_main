@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared\Response;
 
-use App\Dto\AbstractResponseDto;
 use App\Dto\BaseDto;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,9 +89,9 @@ class ApiResponse
     }
 
     /**
-     * @param BaseDto[]             $collection
-     * @param string[]              $headers
-     * @param mixed[]               $additional_fields
+     * @param BaseDto[] $collection
+     * @param string[]  $headers
+     * @param mixed[]   $additional_fields
      */
     public static function responseList(array $collection, ?int $totalCount = null, array $headers = [], array $additional_fields = []): JsonResponse
     {

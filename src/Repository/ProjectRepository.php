@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Project;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
 
 class ProjectRepository extends BaseEntityRepository
 {

@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use App\Entity\BaseEntity;
-use App\Entity\Project;
 use App\Entity\ProjectUser;
-use App\Entity\Task;
 use App\Enum\RoleEnum;
 use App\Shared\Parser\ParseDataTrait;
-use DateTime;
 
 final class ProjectUserDto extends BaseDto
 {
@@ -23,12 +20,14 @@ final class ProjectUserDto extends BaseDto
         public readonly ?RoleEnum $role,
     ) {
     }
+
     public static function fromArray(array $data): static
     {
         $roleEnum = null;
-        if($role = self::parseNullableString($data['role'])) { 
+        if ($role = self::parseNullableString($data['role'])) {
             $roleEnum = RoleEnum::from($role);
         }
+
         return new static(
             id: self::parseNullableString($data['id']),
             projectId: self::parseString($data['project_id']),
@@ -50,11 +49,10 @@ final class ProjectUserDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=> $this->id,
-            'project_id'=> $this->projectId,
-            'user_id'=> $this->userId,
-            'role'=> $this->role->value
+            'id' => $this->id,
+            'project_id' => $this->projectId,
+            'user_id' => $this->userId,
+            'role' => $this->role->value,
         ];
     }
-
 }

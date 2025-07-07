@@ -7,8 +7,8 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\UuidV7;
 
 #[ORM\HasLifecycleCallbacks]
-abstract class BaseEntity { 
-
+abstract class BaseEntity
+{
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true, nullable: false)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]

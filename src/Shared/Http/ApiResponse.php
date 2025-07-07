@@ -24,7 +24,7 @@ class ApiResponse extends JsonResponse
      */
     private function format(string $message, mixed $data = null, array $errors = []): array
     {
-        if ($data === null) {
+        if (null === $data) {
             $data = new \ArrayObject();
         }
 

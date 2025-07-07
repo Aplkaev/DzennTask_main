@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UseCase\Crud;
 
-use App\Entity\User;
 use App\Dto\UserRegisterDto;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,12 +14,13 @@ class UserRegisterUseCase
 {
     public function __construct(
         protected readonly UserPasswordHasherInterface $passwordHasher,
-        protected readonly UserRepository $repository
-    ) {}
+        protected readonly UserRepository $repository,
+    ) {
+    }
 
-    public function execute(UserRegisterDto $userDto): User { 
-
-        if($this->repository->findBy(['email'=>$userDto->email])) { 
+    public function execute(UserRegisterDto $userDto): User
+    {
+        if ($this->repository->findBy(['email' => $userDto->email])) {
             throw new BadRequestException('Уже есть такой пользоваетль с email:'.$userDto->email);
         }
         $user = new User();

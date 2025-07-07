@@ -2,6 +2,6 @@
 
 namespace App\Enum;
 
-enum AllEntityTypeEnum: string{
-    
+enum AllEntityTypeEnum: string
+{
 }

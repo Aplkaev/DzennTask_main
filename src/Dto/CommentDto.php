@@ -6,12 +6,8 @@ namespace App\Dto;
 
 use App\Entity\BaseEntity;
 use App\Entity\Comment;
-use App\Entity\Notification;
-use App\Entity\Project;
-use App\Entity\Task;
 use App\Enum\AllEntityTypeEnum;
 use App\Shared\Parser\ParseDataTrait;
-use DateTime;
 
 final class CommentDto extends BaseDto
 {
@@ -26,10 +22,11 @@ final class CommentDto extends BaseDto
         public readonly ?string $parentId,
     ) {
     }
+
     public static function fromArray(array $data): static
     {
         $entityType = null;
-        if($type = self::parseNullableString($data['entity_type'])) { 
+        if ($type = self::parseNullableString($data['entity_type'])) {
             $entityType = AllEntityTypeEnum::from($type);
         }
 
@@ -58,13 +55,12 @@ final class CommentDto extends BaseDto
     public function jsonSerialize(): array
     {
         return [
-            'id'=> $this->id,
-            'user_id'=> $this->userId,
-            'text'=> $this->text,
-            'entity_type'=> $this->entityType,
-            'entity_id'=> $this->entityId,
-            'parent_id'=>$this->parentId
+            'id' => $this->id,
+            'user_id' => $this->userId,
+            'text' => $this->text,
+            'entity_type' => $this->entityType,
+            'entity_id' => $this->entityId,
+            'parent_id' => $this->parentId,
         ];
     }
-
 }
