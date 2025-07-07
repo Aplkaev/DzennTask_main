@@ -679,24 +679,6 @@ parameters:
 			path: src/Repository/BaseEntityRepository.php
 
 		-
-			message: '#^Parameter \#1 \$user of method Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface\:\:hashPassword\(\) expects Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface, App\\Entity\\Admin\|App\\Entity\\UserEntity given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Shared/Password/PasswordHasherHelper.php
-
-		-
-			message: '#^Parameter \$userEntity of method App\\Shared\\Password\\PasswordHasherHelper\:\:hash\(\) has invalid type App\\Entity\\Admin\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Shared/Password/PasswordHasherHelper.php
-
-		-
-			message: '#^Parameter \$userEntity of method App\\Shared\\Password\\PasswordHasherHelper\:\:hash\(\) has invalid type App\\Entity\\UserEntity\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Shared/Password/PasswordHasherHelper.php
-
-		-
 			message: '#^Strict comparison using \=\=\= between null and list\<object\> will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
