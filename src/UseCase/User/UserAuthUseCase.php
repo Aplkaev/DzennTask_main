@@ -26,9 +26,13 @@ final class UserAuthUseCase
             return $this;
         }
 
-        $this->user = $this->security->getUser();
+        $user = $this->security->getUser();
 
-        if (null === $this->user) {
+        if (!$user instanceof User) {
+            throw new AuthenticationException('Not login');
+        }
+
+        if ($this->user === null) {
             throw new AuthenticationException('Not login');
         }
 
