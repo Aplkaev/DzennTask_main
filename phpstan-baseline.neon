@@ -1,0 +1,865 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:delete\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Controller\\AbstractCrudController\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Controller/AbstractCrudController.php
+
+		-
+			message: '#^Method App\\Dto\\BaseDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/BaseDto.php
+
+		-
+			message: '#^Method App\\Dto\\BaseDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/BaseDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getAuthor\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getEntityId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getEntityType\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getParent\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getText\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Method App\\Dto\\CommentDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/CommentDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getText\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getType\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getUser\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:isRead\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Method App\\Dto\\NotificationDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Method App\\Dto\\NotificationDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/NotificationDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getDescription\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getTag\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/ProjectDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getProject\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getRole\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getUser\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Method App\\Dto\\ProjectUserDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/ProjectUserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getAssgnedTo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getDeadline\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getDescrition\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getParent\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getPriority\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getProject\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getStatus\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getStoryPoints\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getTitle\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Method App\\Dto\\TasktDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Parameter \$storyPoints of class App\\Dto\\TasktDto constructor expects int\|null, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Dto/TasktDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getAvatarUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getEmail\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getTimezone\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 5
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 2
+			path: src/Dto/UserDto.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getEmail\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Dto/UserRegisterDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserRegisterDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserRegisterDto.php
+
+		-
+			message: '#^Method App\\Dto\\UserRegisterDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Dto/UserRegisterDto.php
+
+		-
+			message: '#^Parameter \#1 \$project of method App\\Entity\\KanbanColumn\:\:setProject\(\) expects App\\Entity\\Project, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/Project.php
+
+		-
+			message: '#^Parameter \#1 \$project of method App\\Entity\\ProjectUser\:\:setProject\(\) expects App\\Entity\\Project, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/Project.php
+
+		-
+			message: '#^Class App\\Entity\\Project referenced with incorrect case\: App\\Entity\\project\.$#'
+			identifier: class.nameCase
+			count: 2
+			path: src/Entity/ProjectUser.php
+
+		-
+			message: '#^Method App\\Entity\\Task\:\:getComments\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Entity/Task.php
+
+		-
+			message: '#^Property App\\Entity\\Task\:\:\$comments with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Entity/Task.php
+
+		-
+			message: '#^Method App\\Entity\\User\:\:setRoles\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: '#^Property App\\Entity\\User\:\:\$roles type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: '#^Class App\\Repository\\BaseEntityRepository extends generic class Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Class App\\Repository\\BaseEntityRepository has PHPDoc tag @method for method findBy\(\) parameter \#1 \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Class App\\Repository\\BaseEntityRepository has PHPDoc tag @method for method findBy\(\) parameter \#2 \$orderBy with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Class App\\Repository\\BaseEntityRepository has PHPDoc tag @method for method findOneBy\(\) parameter \#1 \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Class App\\Repository\\BaseEntityRepository has PHPDoc tag @method for method findOneBy\(\) parameter \#2 \$orderBy with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Property App\\Repository\\BaseEntityRepository\:\:\$registry is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Repository/BaseEntityRepository.php
+
+		-
+			message: '#^Parameter \#1 \$user of method Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface\:\:hashPassword\(\) expects Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface, App\\Entity\\Admin\|App\\Entity\\UserEntity given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Shared/Password/PasswordHasherHelper.php
+
+		-
+			message: '#^Parameter \$userEntity of method App\\Shared\\Password\\PasswordHasherHelper\:\:hash\(\) has invalid type App\\Entity\\Admin\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Shared/Password/PasswordHasherHelper.php
+
+		-
+			message: '#^Parameter \$userEntity of method App\\Shared\\Password\\PasswordHasherHelper\:\:hash\(\) has invalid type App\\Entity\\UserEntity\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Shared/Password/PasswordHasherHelper.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between null and list\<object\> will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/UseCase/Crud/AbstractCrudUseCase.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method Doctrine\\ORM\\EntityManagerInterface\:\:getRepository\(\)$#'
+			identifier: argument.templateType
+			count: 4
+			path: src/UseCase/Crud/AbstractCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/CommentCrudUseCase.php
+
+		-
+			message: '#^Parameter \#1 \$author of method App\\Entity\\Comment\:\:setAuthor\(\) expects App\\Entity\\User, Symfony\\Component\\Security\\Core\\User\\UserInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/UseCase/Crud/CommentCrudUseCase.php
+
+		-
+			message: '#^Part \$dto\-\>entityType \(App\\Enum\\AllEntityTypeEnum\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/UseCase/Crud/CommentCrudUseCase.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to method Doctrine\\ORM\\EntityManagerInterface\:\:getRepository\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/UseCase/Crud/CommentCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/ProjectCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/UseCase/Crud/ProjectCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$tag\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/ProjectCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$projectId\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/ProjectUserCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/ProjectUserCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$userId\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/ProjectUserCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$assignedToId\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$deadline\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$priority\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$projectId\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$storyPoints\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$storyPouits\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/TaskCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$avatarUrl\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/UserCrudUseCase copy.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/UserCrudUseCase copy.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$timezone\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/UseCase/Crud/UserCrudUseCase copy.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$avatarUrl\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/UserCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/UserCrudUseCase.php
+
+		-
+			message: '#^Access to an undefined property App\\Dto\\BaseDto\:\:\$timezone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/UseCase/Crud/UserCrudUseCase.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between App\\Entity\\User and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/UseCase/User/UserAuthUseCase.php

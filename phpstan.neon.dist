@@ -1,0 +1,8 @@
+parameters:
+    level: 6
+    paths:
+        - src
+
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon # если Symfony
+    - phpstan-baseline.neon

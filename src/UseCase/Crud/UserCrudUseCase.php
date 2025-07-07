@@ -34,7 +34,11 @@ class UserCrudUseCase extends AbstractCrudUseCase
 
     public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): mixed
     {
-        if (false === $user instanceof User) {
+        if ($user instanceof User === false) {
+            throw new BadRequestException('Is not project item');
+        }
+
+        if ($dto instanceof UserDto === false) {
             throw new BadRequestException('Is not project item');
         }
 

@@ -32,6 +32,8 @@ final class UserAuthUseCase
             throw new AuthenticationException('Not login');
         }
 
+        $this->user = $user;
+
         if ($this->user === null) {
             throw new AuthenticationException('Not login');
         }

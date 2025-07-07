@@ -8,6 +8,11 @@ use App\Entity\BaseEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @method find($id, $lockMode = null, $lockVersion = null)
+ * @method findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+ * @method findOneBy(array $criteria, ?array $orderBy = null)
+ */
 abstract class BaseEntityRepository extends ServiceEntityRepository
 {
     public function __construct(
