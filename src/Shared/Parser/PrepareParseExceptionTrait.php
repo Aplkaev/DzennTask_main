@@ -15,7 +15,8 @@ trait PrepareParseExceptionTrait
                 'Failed '.var_export(debug_backtrace()[1]['function'], true).':'.
                 var_export(debug_backtrace()[1]['args'][0], true).' at '.
                 var_export(debug_backtrace()[1]['file'], true).':'.
-                var_export(debug_backtrace()[1]['line'], true).' '.$message);
+                var_export(debug_backtrace()[1]['line'], true).' '.$message
+            );
         } catch (\Exception) {
             return new BadRequestException('Error on cast types: '.var_export(debug_backtrace(), true));
         }
