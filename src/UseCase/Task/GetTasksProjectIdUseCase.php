@@ -19,6 +19,9 @@ class GetTasksProjectIdUseCase
      */
     public function execute(string $projectId): array
     {
-        return $this->taskRepository->findBy(['project' => $projectId]) ?? [];
+        return $this->taskRepository->findBy(
+            ['project' => $projectId],
+            ['id' => 'DESC']
+        ) ?? [];
     }
 }
