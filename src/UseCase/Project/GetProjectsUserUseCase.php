@@ -22,7 +22,7 @@ class GetProjectsUserUseCase
      */
     public function execute(?User $user = null): array
     {
-        if($user === null) {
+        if ($user === null) {
             $user = $this->userAuthUseCase->execute()->getUser();
         }
 

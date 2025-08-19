@@ -2,35 +2,36 @@
 
 declare(strict_types=1);
 
-namespace App\UseCase\Project;
+namespace App\UseCase\Task;
 
 use App\Entity\User;
-use App\Repository\ProjectRepository;
+use App\Repository\TaskRepository;
 use App\UseCase\User\UserAuthUseCase;
 
-class CheckUserAccessToProjectUseCase
+class CheckUserAccessToTaskUseCase
 {
     public function __construct(
         private readonly UserAuthUseCase $userAuthUseCase,
-        private readonly ProjectRepository $projectRepository,
+        private readonly TaskRepository $taskRepository,
     ) {
     }
 
-    public function execute(string $projectId, ?User $user = null): bool
+    public function execute(string $taskId, ?User $user = null): bool
     {
         if ($user === null) {
             $user = $this->userAuthUseCase->execute()->getUser();
         }
 
-        $project = $this->projectRepository->createQueryBuilder('p')
+        $task = $this->taskRepository->createQueryBuilder('t')
+            ->leftJoin('t.project', 'p')
             ->leftJoin('p.projectUsers', 'pu')
-            ->andWhere('p.id = :projectId')
+            ->andWhere('t.id = :taskId')
             ->andWhere('pu.user = :user')
-            ->setParameter('projectId', $projectId)
+            ->setParameter('taskId', $taskId)
             ->setParameter('user', $user)
             ->getQuery()
             ->getOneOrNullResult();
 
-        return $project !== null;
+        return $task !== null;
     }
 }

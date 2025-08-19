@@ -41,6 +41,11 @@ abstract class AbstractCrudUseCase
         return $entity;
     }
 
+    /**
+     * @template T of BaseDto
+     *
+     * @param T $dto
+     */
     public function create(string $entityClass, BaseDto $dto): BaseEntity
     {
         $item = $this->createEntityFromArray($dto);
@@ -50,6 +55,11 @@ abstract class AbstractCrudUseCase
         return $item;
     }
 
+    /**
+     * @template T of BaseDto
+     *
+     * @param T $dto
+     */
     public function update(string $entityClass, string $id, BaseDto $dto): BaseEntity
     {
         $item = $this->em->getRepository($entityClass)->find($id);
@@ -66,7 +76,17 @@ abstract class AbstractCrudUseCase
         $this->em->flush();
     }
 
+    /**
+     * @template T of BaseDto
+     *
+     * @param T $dto
+     */
     abstract public function createEntityFromArray(BaseDto $dto): mixed;
 
+    /**
+     * @template T of BaseDto
+     *
+     * @param T $dto
+     */
     abstract public function updateEntityFromArray(mixed $item, BaseDto $dto): mixed;
 }

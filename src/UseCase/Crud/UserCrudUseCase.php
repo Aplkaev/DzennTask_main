@@ -18,7 +18,12 @@ class UserCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    public function createEntityFromArray(BaseDto|UserDto $dto): mixed
+    /**
+     * Undocumented function.
+     *
+     * @param UserDto $dto
+     */
+    public function createEntityFromArray(BaseDto|UserDto $dto): User
     {
         $user = new User();
         // todo сохранение пароля
@@ -32,15 +37,15 @@ class UserCrudUseCase extends AbstractCrudUseCase
         return $user;
     }
 
-    public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): mixed
+    /**
+     * @pamar User $user
+     *
+     * @param UserDto $dto
+     *
+     * @return User
+     */
+    public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): User
     {
-        if ($user instanceof User === false) {
-            throw new BadRequestException('Is not project item');
-        }
-
-        if ($dto instanceof UserDto === false) {
-            throw new BadRequestException('Is not project item');
-        }
 
         $user->setAvatarUrl($dto->avatarUrl);
         $user->setTimezone($dto->timezone);

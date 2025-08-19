@@ -9,7 +9,7 @@ use App\Entity\Task;
 use App\Enum\Task\TaskStatusEnum;
 use App\Shared\Parser\ParseDataTrait;
 
-final class TasktDto extends BaseDto
+final class TaskDto extends BaseDto
 {
     use ParseDataTrait;
 

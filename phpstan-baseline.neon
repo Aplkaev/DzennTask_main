@@ -376,127 +376,127 @@ parameters:
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getAssgnedTo\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getDeadline\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getDescrition\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getParent\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getPriority\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getProject\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getStatus\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getStoryPoints\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getTitle\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
 			identifier: catch.neverThrown
 			count: 5
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:fromArray\(\) has parameter \$data with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:jsonSerialize\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseArray\(\) has parameter \$defaultValue with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 2
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseDateTimeImmutable\(\) should return DateTimeImmutable but returns float\.$#'
 			identifier: return.type
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseRequestDto\(\) has no return type specified\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseRequestDto\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseRequestDtoList\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseResponseDto\(\) has no return type specified\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseResponseDto\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Method App\\Dto\\TasktDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Dto\\TaskDto\:\:parseResponseDtoList\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^PHPDoc tag @return has invalid value \(T&\!null\)\: Unexpected token "\!", expected type at offset 139 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 2
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^PHPDoc tag @return has invalid value \(array\<T\>&\!null\)\: Unexpected token "\!", expected type at offset 146 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 2
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
-			message: '#^Parameter \$storyPoints of class App\\Dto\\TasktDto constructor expects int\|null, string\|null given\.$#'
+			message: '#^Parameter \$storyPoints of class App\\Dto\\TaskDto constructor expects int\|null, string\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: src/Dto/TasktDto.php
+			path: src/Dto/TaskDto.php
 
 		-
 			message: '#^Call to an undefined method App\\Entity\\BaseEntity\:\:getAvatarUrl\(\)\.$#'

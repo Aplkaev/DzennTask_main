@@ -34,10 +34,6 @@ final class UserAuthUseCase
 
         $this->user = $user;
 
-        if ($this->user === null) {
-            throw new AuthenticationException('Not login');
-        }
-
         $this->userDto = UserDto::fromModel($this->user);
 
         return $this;

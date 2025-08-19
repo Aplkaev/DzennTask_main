@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UseCase\Crud;
 
 use App\Dto\BaseDto;
-use App\Dto\TasktDto;
+use App\Dto\TaskDto;
 use App\Entity\Task;
 use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
@@ -13,7 +13,6 @@ use App\Repository\UserRepository;
 use App\UseCase\Project\VerifyUserAccessToProjectUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class TaskCrudUseCase extends AbstractCrudUseCase
 {
@@ -23,16 +22,17 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         protected readonly Security $security,
         protected readonly ProjectRepository $projectRepository,
         protected readonly UserRepository $userRepository,
-        protected readonly VerifyUserAccessToProjectUseCase $verifyUserAccessToProjectUseCase
+        protected readonly VerifyUserAccessToProjectUseCase $verifyUserAccessToProjectUseCase,
     ) {
         parent::__construct($em);
     }
 
     /**
-     * @param TasktDto $dto
+     * @param TaskDto $dto
      */
-    public function createEntityFromArray(BaseDto|TasktDto $dto): mixed
+    public function createEntityFromArray(BaseDto|TaskDto $dto): Task
     {
+        // \assert($dto instanceof TaskDto);
         $this->verifyUserAccessToProjectUseCase->execute($dto->projectId);
 
         $project = $this->projectRepository->find($dto->projectId);
@@ -53,14 +53,13 @@ class TaskCrudUseCase extends AbstractCrudUseCase
     }
 
     /**
-     * @param Task $task
-     * @param TasktDto $dto
+     * @param Task    $task
+     * @param TaskDto $dto
      */
-    public function updateEntityFromArray(mixed $task, BaseDto|TasktDto $dto): mixed
+    public function updateEntityFromArray(mixed $task, BaseDto|TaskDto $dto): Task
     {
-        if ($task instanceof Task === false) {
-            throw new BadRequestException('Is not project item');
-        }
+        // \assert($dto instanceof TaskDto);
+        // \assert($task instanceof Task);
 
         $this->verifyUserAccessToProjectUseCase->execute($dto->projectId);
 

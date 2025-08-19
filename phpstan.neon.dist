@@ -5,4 +5,3 @@ parameters:
 
 includes:
     - vendor/phpstan/phpstan-symfony/extension.neon # если Symfony
-    - phpstan-baseline.neon

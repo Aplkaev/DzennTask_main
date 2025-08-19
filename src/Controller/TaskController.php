@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Dto\TasktDto;
+use App\Dto\TaskDto;
 use App\Entity\Task;
 use App\Enum\Task\TaskStatusEnum;
 use App\Shared\Response\ApiResponse;
@@ -13,6 +13,7 @@ use App\UseCase\Task\GetTasksProjectIdUseCase;
 use App\UseCase\Task\TaskSetStatusUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -35,7 +36,7 @@ class TaskController extends AbstractCrudController
 
     public function getDto(): string
     {
-        return TasktDto::class;
+        return TaskDto::class;
     }
 
     #[Route('/project/{id}', methods: ['GET'])]
@@ -60,12 +61,21 @@ class TaskController extends AbstractCrudController
     }
 
     #[Route('/{id}', methods: ['PUT'])]
-    public function taskUpdate(Task $task, #[MapRequestPayload] TasktDto $taskDto): JsonResponse
+    public function taskUpdate(Task $task, #[MapRequestPayload] TaskDto $taskDto): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $this->taskCrudUseCase->update(Task::class, $task->getStringId(), $taskDto);
 
         return ApiResponse::success();
+    }
+
+    #[Route('', methods: ['GET'])]
+    public function index(): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        return ApiResponse::error(status: Response::HTTP_NOT_FOUND);
+
     }
 }
