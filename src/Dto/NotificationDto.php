@@ -29,6 +29,11 @@ final class NotificationDto extends BaseDto
         );
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param Notification $model
+     */
     public static function fromModel(BaseEntity|Notification $model): static
     {
         return new static(

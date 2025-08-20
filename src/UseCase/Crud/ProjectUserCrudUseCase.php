@@ -23,6 +23,9 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
+    /**
+     * @param ProjectUserDto $dto
+     */
     public function createEntityFromArray(BaseDto|ProjectUserDto $dto): mixed
     {
         $project = null;
@@ -52,6 +55,9 @@ class ProjectUserCrudUseCase extends AbstractCrudUseCase
         return $projectUser;
     }
 
+    /**
+     * @param ProjectUserDto $dto
+     */
     public function updateEntityFromArray(mixed $projectUser, BaseDto|ProjectUserDto $dto): mixed
     {
         if (false === $projectUser instanceof ProjectUser) {

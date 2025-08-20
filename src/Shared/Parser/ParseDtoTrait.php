@@ -38,7 +38,7 @@ trait ParseDtoTrait
      * @param class-string<T> $className
      * @param T|null          $defaultValue
      *
-     * @return T&!null
+     * @return T
      */
     protected static function parseRequestDto(string $className, mixed &$value, $defaultValue = null)
     {
@@ -82,7 +82,7 @@ trait ParseDtoTrait
      * @param class-string<T> $className
      * @param array<T>|null   $defaultValue
      *
-     * @return array<T>&!null
+     * @return array<T>
      */
     protected static function parseRequestDtoList(string $className, mixed &$value, $defaultValue = null): array
     {
@@ -124,7 +124,7 @@ trait ParseDtoTrait
      * @param class-string<T> $className
      * @param T|null          $defaultValue
      *
-     * @return T&!null
+     * @return T
      */
     protected static function parseResponseDto(string $className, mixed $value, $defaultValue = null)
     {
@@ -168,7 +168,7 @@ trait ParseDtoTrait
      * @param class-string<T> $className
      * @param array<T>|null   $defaultValue
      *
-     * @return array<T>&!null
+     * @return array<T>
      */
     protected static function parseResponseDtoList(string $className, mixed &$value, $defaultValue = null): array
     {

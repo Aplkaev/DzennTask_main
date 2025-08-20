@@ -32,6 +32,11 @@ final class UserRegisterDto extends BaseDto
         );
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param User $model
+     */
     public static function fromModel(BaseEntity|User $model): static
     {
         return new static(

@@ -33,6 +33,9 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         return $this->getProjectsUserUseCase->execute();
     }
 
+    /**
+     * @param ProjectDto $dto
+     */
     public function createEntityFromArray(BaseDto|ProjectDto $dto): mixed
     {
         $hasProject = $this->projectRepository->findOneBy(['name' => $dto->name]);
@@ -62,6 +65,9 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         return $project;
     }
 
+    /**
+     * @param ProjectDto $dto
+     */
     public function updateEntityFromArray(mixed $project, BaseDto|ProjectDto $dto): mixed
     {
         if (false === $project instanceof Project) {

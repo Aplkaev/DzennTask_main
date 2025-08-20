@@ -48,6 +48,11 @@ final class TaskDto extends BaseDto
         );
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param Task $model
+     */
     public static function fromModel(BaseEntity|Task $model): static
     {
         return new static(

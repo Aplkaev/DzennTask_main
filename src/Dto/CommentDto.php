@@ -40,6 +40,11 @@ final class CommentDto extends BaseDto
         );
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param Comment $model
+     */
     public static function fromModel(BaseEntity|Comment $model): static
     {
         return new static(

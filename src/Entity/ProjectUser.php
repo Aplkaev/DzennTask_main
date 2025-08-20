@@ -20,12 +20,12 @@ class ProjectUser extends BaseEntity
     #[ORM\Column(enumType: RoleEnum::class)]
     private RoleEnum $role;
 
-    public function getProject(): project
+    public function getProject(): Project
     {
         return $this->project;
     }
 
-    public function setProject(project $project): static
+    public function setProject(Project $project): static
     {
         $this->project = $project;
 

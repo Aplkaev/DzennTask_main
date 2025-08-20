@@ -30,6 +30,11 @@ final class ProjectDto extends BaseDto
         );
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param Project $model
+     */
     public static function fromModel(BaseEntity|Project $model): static
     {
         return new static(

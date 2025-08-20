@@ -41,7 +41,7 @@ class CommentCrudUseCase extends AbstractCrudUseCase
             $entity = $this->em->getRepository($dto->entityType->value)->find($dto->entityId);
             if (null === $entity) {
                 // TODO вынести в свой exception
-                throw new NotFoundHttpException("Not found entity: {$dto->entityId} entoty_type:{$dto->entityType}");
+                throw new NotFoundHttpException("Not found entity: {$dto->entityId} entoty_type:{$dto->entityType->value}");
             }
         }
 
@@ -57,6 +57,9 @@ class CommentCrudUseCase extends AbstractCrudUseCase
         return $comment;
     }
 
+    /**
+     * @param CommentDto $dto
+     */
     public function updateEntityFromArray(mixed $comment, BaseDto|CommentDto $dto): mixed
     {
         if (false === $comment instanceof Comment) {
