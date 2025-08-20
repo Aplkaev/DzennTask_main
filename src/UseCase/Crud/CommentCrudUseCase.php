@@ -5,6 +5,7 @@ namespace App\UseCase\Crud;
 use App\Dto\BaseDto;
 use App\Dto\CommentDto;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +30,9 @@ class CommentCrudUseCase extends AbstractCrudUseCase
     public function createEntityFromArray(BaseDto|CommentDto $dto): mixed
     {
         $parent = null;
+        /**
+         * @var User $user
+         */
         $user = $this->security->getUser();
         $entity = null;
 

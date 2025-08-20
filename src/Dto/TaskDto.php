@@ -41,7 +41,7 @@ final class TaskDto extends BaseDto
             status: $status,
             priority: self::parseNullableInt($data['priority']),
             deadline: self::parseNullableDateTimeImmutable($data['deadline']),
-            storyPoints: self::parseNullableString($data['story_points']),
+            storyPoints: self::parseNullableInt($data['story_points']),
             parentId: self::parseNullableString($data['parent_id']),
             assignedToId: self::parseString($data['assigned_to_id']),
             projectId: self::parseString($data['project_id'])

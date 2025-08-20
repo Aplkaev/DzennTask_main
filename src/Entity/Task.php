@@ -24,7 +24,7 @@ class Task extends BaseEntity
     private ?int $priority = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $deadline = null;
+    private ?\DateTimeImmutable $deadline = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $storyPoints = null;
@@ -146,12 +146,12 @@ class Task extends BaseEntity
         return $this;
     }
 
-    public function getDeadline(): ?\DateTime
+    public function getDeadline(): ?\DateTimeImmutable
     {
         return $this->deadline;
     }
 
-    public function setDeadline(?\DateTime $deadline): static
+    public function setDeadline(?\DateTimeImmutable $deadline): static
     {
         $this->deadline = $deadline;
 

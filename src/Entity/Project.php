@@ -109,17 +109,17 @@ class Project extends BaseEntity
         return $this;
     }
 
-    public function removeProjectUser(ProjectUser $projectUser): static
-    {
-        if ($this->projectUsers->removeElement($projectUser)) {
-            // set the owning side to null (unless already changed)
-            if ($projectUser->getProject() === $this) {
-                $projectUser->setProject(null);
-            }
-        }
+    // public function removeProjectUser(ProjectUser $projectUser): static
+    // {
+    //     if ($this->projectUsers->removeElement($projectUser)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($projectUser->getProject() === $this) {
+    //             $projectUser->setProject(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, KanbanColumn>
@@ -139,15 +139,15 @@ class Project extends BaseEntity
         return $this;
     }
 
-    public function removeKanbanColumn(KanbanColumn $kanbanColumn): static
-    {
-        if ($this->kanbanColumns->removeElement($kanbanColumn)) {
-            // set the owning side to null (unless already changed)
-            if ($kanbanColumn->getProject() === $this) {
-                $kanbanColumn->setProject(null);
-            }
-        }
+    // public function removeKanbanColumn(KanbanColumn $kanbanColumn): static
+    // {
+    //     if ($this->kanbanColumns->removeElement($kanbanColumn)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($kanbanColumn->getProject() === $this) {
+    //             $kanbanColumn->setProject(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
