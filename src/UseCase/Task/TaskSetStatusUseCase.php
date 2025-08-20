@@ -12,13 +12,13 @@ class TaskSetStatusUseCase
 {
     public function __construct(
         private readonly TaskRepository $taskRepository,
-        private readonly VerifyUserAccessToTasktUseCase $verifyUserAccessToTasktUseCase,
+        private readonly VerifyUserAccessToTaskUseCase $verifyUserAccessToTaskUseCase,
     ) {
     }
 
     public function execute(Task $task, TaskStatusEnum $status): void
     {
-        $this->verifyUserAccessToTasktUseCase->execute($task->getStringId());
+        $this->verifyUserAccessToTaskUseCase->execute($task->getStringId());
 
         $task->setStatus($status);
         // отправим нотификацию на почту, отправим инфу в ws для обновления у всех

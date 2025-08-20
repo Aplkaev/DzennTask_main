@@ -76,17 +76,7 @@ abstract class AbstractCrudUseCase
         $this->em->flush();
     }
 
-    /**
-     * @template T of BaseDto
-     *
-     * @param T $dto
-     */
     abstract public function createEntityFromArray(BaseDto $dto): mixed;
 
-    /**
-     * @template T of BaseDto
-     *
-     * @param T $dto
-     */
     abstract public function updateEntityFromArray(mixed $item, BaseDto $dto): mixed;
 }

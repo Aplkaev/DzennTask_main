@@ -7,7 +7,6 @@ use App\Dto\UserDto;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserCrudUseCase extends AbstractCrudUseCase
 {
@@ -18,15 +17,13 @@ class UserCrudUseCase extends AbstractCrudUseCase
         parent::__construct($em);
     }
 
-    /**
-     * Undocumented function.
-     *
-     * @param UserDto $dto
-     */
-    public function createEntityFromArray(BaseDto|UserDto $dto): User
+    public function createEntityFromArray(BaseDto $dto): User
     {
+        if (!$dto instanceof UserDto) {
+            throw new \InvalidArgumentException('Expected UserDto, got '.get_class($dto));
+        }
+
         $user = new User();
-        // todo сохранение пароля
         $user->setEmail($dto->email);
         $user->setAvatarUrl($dto->avatarUrl);
         $user->setTimezone($dto->timezone);
@@ -38,14 +35,17 @@ class UserCrudUseCase extends AbstractCrudUseCase
     }
 
     /**
-     * @pamar User $user
-     *
-     * @param UserDto $dto
-     *
-     * @return User
+     * Undocumented function.
      */
     public function updateEntityFromArray(mixed $user, BaseDto|UserDto $dto): User
     {
+        if (!$dto instanceof UserDto) {
+            throw new \InvalidArgumentException('Expected UserDto, got '.get_class($dto));
+        }
+
+        if (!$user instanceof User) {
+            throw new \InvalidArgumentException('Expected User, got '.get_class($user));
+        }
 
         $user->setAvatarUrl($dto->avatarUrl);
         $user->setTimezone($dto->timezone);

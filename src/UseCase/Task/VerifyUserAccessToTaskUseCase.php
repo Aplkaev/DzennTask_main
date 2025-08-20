@@ -7,7 +7,7 @@ namespace App\UseCase\Task;
 use App\Entity\User;
 use App\Exception\AccessDenied\AccessDeniedException;
 
-class VerifyUserAccessToTasktUseCase
+class VerifyUserAccessToTaskUseCase
 {
     public function __construct(
         private readonly CheckUserAccessToTaskUseCase $checkUserAccessToTaskUseCase,
