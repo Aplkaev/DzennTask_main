@@ -10,15 +10,11 @@ trait ParseFloatTrait
 
     protected static function parseNullableFloat(mixed &$value): ?float
     {
-        try {
-            if ('0' === (string) $value) {
-                return 0;
-            }
-
-            return empty($value) ? null : (float) $value;
-        } catch (\Exception) {
-            throw self::prepareParseException();
+        if ('0' === (string) $value) {
+            return 0;
         }
+
+        return empty($value) ? null : (float) $value;
     }
 
     protected static function parseFloat(mixed &$value, ?float $defaultValue = null): float

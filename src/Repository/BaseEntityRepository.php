@@ -18,7 +18,7 @@ abstract class BaseEntityRepository extends ServiceEntityRepository
     public function __construct(
         private readonly ManagerRegistry $registry,
     ) {
-        parent::__construct($registry, $this->entityClass());
+        parent::__construct($this->registry, $this->entityClass());
     }
 
     abstract public function entityClass(): string;

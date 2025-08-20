@@ -10,15 +10,12 @@ trait ParseIntTrait
 
     protected static function parseNullableInt(mixed &$value): ?int
     {
-        try {
-            if ('0' === (string) $value) {
-                return 0;
-            }
 
-            return empty($value) ? null : (int) $value;
-        } catch (\Exception) {
-            throw self::prepareParseException();
+        if ('0' === (string) $value) {
+            return 0;
         }
+
+        return empty($value) ? null : (int) $value;
     }
 
     protected static function parseInt(mixed &$value, ?int $defaultValue = null): int

@@ -10,15 +10,11 @@ trait ParseBoolTrait
 
     protected static function parseNullableBool(mixed &$value): ?bool
     {
-        try {
-            if (null === $value) {
-                return null;
-            }
-
-            return (bool) $value;
-        } catch (\Exception) {
-            throw self::prepareParseException();
+        if (null === $value) {
+            return null;
         }
+
+        return (bool) $value;
     }
 
     protected static function parseBool(mixed &$value, ?bool $defaultValue = null): bool

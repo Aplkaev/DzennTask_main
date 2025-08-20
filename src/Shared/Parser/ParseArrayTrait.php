@@ -21,11 +21,7 @@ trait ParseArrayTrait
             return [];
         }
 
-        try {
-            return (array) $value;
-        } catch (\Exception) {
-            throw self::prepareParseException();
-        }
+        return (array) $value;
     }
 
     /**

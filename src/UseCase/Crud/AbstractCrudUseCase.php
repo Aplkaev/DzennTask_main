@@ -23,7 +23,7 @@ abstract class AbstractCrudUseCase
     {
         $entitys = $this->em->getRepository($entityClass)->findAll();
 
-        if (null === $entitys) {
+        if (empty($entitys)) {
             throw new NotFoundHttpException('Not found');
         }
 
