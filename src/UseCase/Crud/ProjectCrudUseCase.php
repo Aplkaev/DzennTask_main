@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Enum\RoleEnum;
 use App\Repository\ProjectRepository;
 use App\UseCase\Project\GetProjectsUserUseCase;
+use App\UseCase\Project\VerifyUserAccessToProjectUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -24,6 +25,7 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         protected readonly GetProjectsUserUseCase $getProjectsUserUseCase,
         protected readonly Security $security,
         protected readonly ProjectUserCrudUseCase $projectUserCrudUseCase,
+        protected readonly VerifyUserAccessToProjectUseCase $verifyUserAccessToProjectUseCase,
     ) {
         parent::__construct($em);
     }
@@ -73,6 +75,8 @@ class ProjectCrudUseCase extends AbstractCrudUseCase
         if (false === $project instanceof Project) {
             throw new BadRequestException('Is not project item');
         }
+
+        $this->verifyUserAccessToProjectUseCase->execute($project->getStringId());
 
         $project->setDescription($dto->description);
         $project->setTag($dto->tag);
