@@ -21,7 +21,7 @@ trait ParseDateTimeImmutableTrait
         }
     }
 
-    protected static function parseDateTimeImmutable(mixed &$value, ?float $defaultValue = null): \DateTimeImmutable
+    protected static function parseDateTimeImmutable(mixed &$value, ?\DateTimeImmutable $defaultValue = null): \DateTimeImmutable
     {
         $castedValue = self::parseNullableDateTimeImmutable($value);
         if (null === $castedValue) {
