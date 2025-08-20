@@ -3,18 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\KanbanColumn;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<KanbanColumn>
- */
-class KanbanColumnRepository extends ServiceEntityRepository
+class KanbanColumnRepository extends BaseEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function entityClass(): string
     {
-        parent::__construct($registry, KanbanColumn::class);
+        return KanbanColumn::class;
     }
+
 
     //    /**
     //     * @return KanbanColumn[] Returns an array of KanbanColumn objects

@@ -8,6 +8,7 @@ use App\Entity\Comment;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
+use App\UseCase\Comment\VerifyUserAccessToCommentUseCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -20,6 +21,7 @@ class CommentCrudUseCase extends AbstractCrudUseCase
         protected readonly CommentRepository $repository,
         protected readonly UserRepository $userRepository,
         protected readonly Security $security,
+        protected readonly VerifyUserAccessToCommentUseCase $verifyUserAccessToCommentUseCase,
     ) {
         parent::__construct($em);
     }
@@ -69,6 +71,8 @@ class CommentCrudUseCase extends AbstractCrudUseCase
         if (false === $comment instanceof Comment) {
             throw new BadRequestException('Is not comment item');
         }
+
+        $this->verifyUserAccessToCommentUseCase->execute($comment->getStringId());
 
         $comment->setText($dto->text);
 
