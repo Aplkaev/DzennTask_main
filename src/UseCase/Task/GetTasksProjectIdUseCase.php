@@ -25,7 +25,11 @@ class GetTasksProjectIdUseCase
 
         return $this->taskRepository->findBy(
             ['project' => $projectId],
-            ['id' => 'DESC']
+            [
+                'priority' => 'DESC',
+                'status' => 'DESC',
+                'id' => 'DESC',
+            ]
         ) ?? [];
     }
 }
