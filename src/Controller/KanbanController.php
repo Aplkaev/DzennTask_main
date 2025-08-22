@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/kanban')]
-class Kanban extends AbstractCrudController
+class KanbanController extends AbstractCrudController
 {
     public function __construct(
         protected EntityManagerInterface $em,
@@ -32,7 +32,7 @@ class Kanban extends AbstractCrudController
 
     public function entityClass(): string
     {
-        return Kanban::class;
+        return KanbanColumn::class;
     }
 
     public function getDto(): string
