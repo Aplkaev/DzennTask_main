@@ -14,10 +14,9 @@ class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
     use ParseDataTrait;
 
     public function __construct(
-        private readonly ?string $status = null
-    )
-    {
-        
+        private readonly ?string $status = null,
+    ) {
+
     }
 
     public function getStatus(): ?TaskStatusEnum
@@ -35,7 +34,7 @@ class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
     public function jsonSerialize(): array
     {
         return [
-            'status'=>$this->getStatus()?->value
+            'status' => $this->getStatus()?->value,
         ];
     }
 }

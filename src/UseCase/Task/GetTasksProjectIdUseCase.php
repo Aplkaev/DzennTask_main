@@ -6,7 +6,6 @@ namespace App\UseCase\Task;
 
 use App\Dto\Filter\Task\FilterTaskDto;
 use App\Entity\Task;
-use App\Enum\Task\TaskStatusEnum;
 use App\Repository\TaskRepository;
 use App\UseCase\Project\VerifyUserAccessToProjectUseCase;
 
@@ -24,10 +23,10 @@ class GetTasksProjectIdUseCase
     public function execute(string $projectId, ?FilterTaskDto $filter = null): array
     {
         $_filter = [
-            'project'=>$projectId,
+            'project' => $projectId,
         ];
 
-        if($filter->getStatus() && $filter->getStatus() !== 'all') { 
+        if ($filter->getStatus() && $filter->getStatus() !== 'all') {
             $_filter['status'] = $filter->getStatus();
         }
 

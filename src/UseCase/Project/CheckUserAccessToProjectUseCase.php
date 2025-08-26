@@ -14,7 +14,7 @@ class CheckUserAccessToProjectUseCase
     public function __construct(
         private readonly UserAuthUseCase $userAuthUseCase,
         // private readonly ProjectRepository $projectRepository,
-        private readonly ProjectUserRepository $projectUserRepository
+        private readonly ProjectUserRepository $projectUserRepository,
     ) {
     }
 
@@ -31,6 +31,6 @@ class CheckUserAccessToProjectUseCase
             ->getQuery()
             ->getOneOrNullResult();
 
-            return $project !== null;
+        return $project !== null;
     }
 }
