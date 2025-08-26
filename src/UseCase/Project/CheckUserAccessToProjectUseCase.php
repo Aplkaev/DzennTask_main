@@ -6,13 +6,15 @@ namespace App\UseCase\Project;
 
 use App\Entity\User;
 use App\Repository\ProjectRepository;
+use App\Repository\ProjectUserRepository;
 use App\UseCase\User\UserAuthUseCase;
 
 class CheckUserAccessToProjectUseCase
 {
     public function __construct(
         private readonly UserAuthUseCase $userAuthUseCase,
-        private readonly ProjectRepository $projectRepository,
+        // private readonly ProjectRepository $projectRepository,
+        private readonly ProjectUserRepository $projectUserRepository
     ) {
     }
 
@@ -21,16 +23,14 @@ class CheckUserAccessToProjectUseCase
         if ($user === null) {
             $user = $this->userAuthUseCase->execute()->getUser();
         }
-
-        $project = $this->projectRepository->createQueryBuilder('p')
-            ->leftJoin('p.projectUsers', 'pu')
-            ->andWhere('p.id = :projectId')
-            ->andWhere('pu.user = :user')
+        $project = $this->projectUserRepository->createQueryBuilder('pu')
+            ->andWhere('pu.project = :projectId')
+            ->andWhere('pu.user = :userId')
             ->setParameter('projectId', $projectId)
-            ->setParameter('user', $user)
+            ->setParameter('userId', $user->getStringId())
             ->getQuery()
             ->getOneOrNullResult();
 
-        return $project !== null;
+            return $project !== null;
     }
 }

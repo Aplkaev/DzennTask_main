@@ -17,6 +17,7 @@ class VerifyUserAccessToProjectUseCase
     public function execute(string $projectId, bool $exception = true, ?User $user = null): bool
     {
         $result = $this->checkUserAccessToProjectUseCase->execute($projectId, $user);
+
         if ($exception && $result === false) {
             throw new AccessDeniedException('User has no access to this project');
         }

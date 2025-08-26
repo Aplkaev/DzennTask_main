@@ -43,11 +43,14 @@ class TaskController extends AbstractCrudController
     public function taskProjectId(string $id): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $items = $this->getTasksProjectIdUseCase->execute($id);
-
-        return ApiResponse::responseList(
-            self::parseResponseDtoList($this->getDto(), $items),
-        );
+        try { 
+            $items = $this->getTasksProjectIdUseCase->execute($id);
+            return ApiResponse::responseList(
+                self::parseResponseDtoList($this->getDto(), $items),
+            );
+        } catch (\Exception $e) { 
+            return ApiResponse::error($e->getMessage());
+        }
     }
 
     #[Route('/{id}/done', methods: ['PUT'])]
