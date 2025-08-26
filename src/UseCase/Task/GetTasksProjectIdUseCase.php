@@ -26,7 +26,7 @@ class GetTasksProjectIdUseCase
             'project' => $projectId,
         ];
 
-        if ($filter->getStatus() && $filter->getStatus() !== 'all') {
+        if ($filter->getStatus()) {
             $_filter['status'] = $filter->getStatus();
         }
 

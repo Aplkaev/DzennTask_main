@@ -9,7 +9,7 @@ use App\Dto\BaseJsonSerializeDto;
 use App\Enum\Task\TaskStatusEnum;
 use App\Shared\Parser\ParseDataTrait;
 
-class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
+final class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
 {
     use ParseDataTrait;
 
