@@ -9,13 +9,15 @@ use App\Entity\Task;
 use App\Enum\Task\TaskStatusEnum;
 use App\Shared\Response\ApiResponse;
 use App\UseCase\Crud\TaskCrudUseCase;
-use App\UseCase\Task\GetTasksProjectIdUseCase;
-use App\UseCase\Task\TaskSetStatusUseCase;
+use App\Dto\Filter\Task\FilterTaskDto;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\UseCase\Task\TaskSetStatusUseCase;
+use Symfony\Component\HttpFoundation\Request;
+use App\UseCase\Task\GetTasksProjectIdUseCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
 #[Route('/tasks')]
 class TaskController extends AbstractCrudController
@@ -40,11 +42,14 @@ class TaskController extends AbstractCrudController
     }
 
     #[Route('/project/{id}', methods: ['GET'])]
-    public function taskProjectId(string $id): JsonResponse
+    public function taskProjectId(Request $request, string $id): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $filter = FilterTaskDto::fromArray($request->query->all());
+
         try { 
-            $items = $this->getTasksProjectIdUseCase->execute($id);
+            $items = $this->getTasksProjectIdUseCase->execute($id, $filter);
             return ApiResponse::responseList(
                 self::parseResponseDtoList($this->getDto(), $items),
             );

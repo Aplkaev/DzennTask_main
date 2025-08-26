@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\UseCase\Task;
 
+use App\Dto\Filter\Task\FilterTaskDto;
 use App\Entity\Task;
+use App\Enum\Task\TaskStatusEnum;
 use App\Repository\TaskRepository;
 use App\UseCase\Project\VerifyUserAccessToProjectUseCase;
 
@@ -19,15 +21,22 @@ class GetTasksProjectIdUseCase
     /**
      * @return Task[]
      */
-    public function execute(string $projectId): array
+    public function execute(string $projectId, ?FilterTaskDto $filter = null): array
     {
+        $_filter = [
+            'project'=>$projectId,
+        ];
+
+        if($filter->getStatus() && $filter->getStatus() !== 'all') { 
+            $_filter['status'] = $filter->getStatus();
+        }
+
         $this->verifyUserAccessToProjectUseCase->execute($projectId);
 
         return $this->taskRepository->findBy(
-            ['project' => $projectId],
+            $_filter,
             [
                 'priority' => 'DESC',
-                'status' => 'DESC',
                 'id' => 'DESC',
             ]
         ) ?? [];

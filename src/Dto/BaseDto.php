@@ -6,11 +6,6 @@ namespace App\Dto;
 
 use App\Entity\BaseEntity;
 
-abstract class BaseDto implements \JsonSerializable
+abstract class BaseDto implements BaseFromArrayDto, BaseFromModalDto, BaseJsonSerializeDto, \JsonSerializable
 {
-    abstract public static function fromArray(array $data): static;
-
-    abstract public static function fromModel(BaseEntity $model): static;
-
-    abstract public function jsonSerialize(): array;
 }
