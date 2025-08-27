@@ -22,22 +22,8 @@ class GetTasksProjectIdUseCase
      */
     public function execute(string $projectId, ?FilterTaskDto $filter = null): array
     {
-        $_filter = [
-            'project' => $projectId,
-        ];
-
-        if ($filter->getStatus()) {
-            $_filter['status'] = $filter->getStatus();
-        }
-
         $this->verifyUserAccessToProjectUseCase->execute($projectId);
 
-        return $this->taskRepository->findBy(
-            $_filter,
-            [
-                'priority' => 'DESC',
-                'id' => 'DESC',
-            ]
-        ) ?? [];
+        return $this->taskRepository->findByFilters($filter);
     }
 }

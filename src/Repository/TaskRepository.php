@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\Filter\Task\FilterTaskDto;
 use App\Entity\Task;
 
 class TaskRepository extends BaseEntityRepository
@@ -35,4 +36,32 @@ class TaskRepository extends BaseEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @return Task[]
+     */
+    public function findByFilters(FilterTaskDto $filter): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if ($filter->getProjectId()) {
+            $qb->andWhere('t.project = :project')
+               ->setParameter('project', $filter->getProjectId());
+        }
+
+        if ($filter->getStatus()) {
+            $qb->andWhere('t.status = :status')
+               ->setParameter('status', $filter->getStatus()->value);
+        }
+
+        if ($filter->getText()) {
+            $qb->andWhere('LOWER(t.title) LIKE :text OR LOWER(t.descrition) LIKE :text')
+               ->setParameter('text', '%'.mb_strtolower($filter->getText()).'%');
+        }
+
+        $qb->orderBy('t.priority', 'DESC')
+           ->addOrderBy('t.id', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

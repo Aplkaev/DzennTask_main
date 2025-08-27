@@ -15,6 +15,7 @@ class Task extends BaseEntity
     private ?string $title = null;
 
     #[ORM\Column(length: 10000, nullable: true)]
+    // description
     private ?string $descrition = null;
 
     #[ORM\Column(enumType: TaskStatusEnum::class)]

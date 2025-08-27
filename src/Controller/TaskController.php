@@ -46,7 +46,10 @@ class TaskController extends AbstractCrudController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $filter = FilterTaskDto::fromArray($request->query->all());
+        $filter = FilterTaskDto::fromArray([
+            'project_id' => $id,
+            ...$request->query->all(),
+        ]);
 
         try {
             $items = $this->getTasksProjectIdUseCase->execute($id, $filter);

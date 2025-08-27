@@ -14,7 +14,9 @@ final class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
     use ParseDataTrait;
 
     public function __construct(
+        private readonly ?string $projectId = null,
         private readonly ?string $status = null,
+        private readonly ?string $text = null,
     ) {
 
     }
@@ -24,10 +26,22 @@ final class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
         return $this->status ? TaskStatusEnum::tryFrom($this->status) : null;
     }
 
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function getProjectId(): ?string
+    {
+        return $this->projectId;
+    }
+
     public static function fromArray(array $data): static
     {
         return new static(
-            status: self::parseNullableString($data['status'])
+            projectId: self::parseNullableString($data['project_id']),
+            status: self::parseNullableString($data['status']),
+            text: self::parseNullableString($data['text']),
         );
     }
 
@@ -35,6 +49,8 @@ final class FilterTaskDto implements BaseFromArrayDto, BaseJsonSerializeDto
     {
         return [
             'status' => $this->getStatus()?->value,
+            'text' => $this->getText(),
+            'project_id' => $this->getProjectId(),
         ];
     }
 }
