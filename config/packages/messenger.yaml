@@ -1,0 +1,21 @@
+framework:
+  messenger:
+    transports:
+      async_high:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: high
+          queues:
+            high_priority: ~
+      async_low:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: low
+          queues:
+            low_priority: ~
+
+    routing:
+    #   'App\Message\HighPriorityMessage': async_high
+    #   'App\Message\LowPriorityMessage': async_low

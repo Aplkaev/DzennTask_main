@@ -1,3 +1,4 @@
+# https://habr.com/ru/articles/804331/
 services:
   php:
     image: ${IMAGES_PREFIX:-}app-php
@@ -12,7 +13,7 @@ services:
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
       MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-      # The two next lines can be removed after initial installation
+      # The two next lines can be removed after inietial installation
       SYMFONY_VERSION: ${SYMFONY_VERSION:-}
       STABILITY: ${STABILITY:-stable}
     volumes:
@@ -33,10 +34,10 @@ services:
       #   protocol: udp
     # command: >
     #   sh -c "docker/wait-for-it.sh db php-fpm"
-
+    # command: >
+    #   sh -c "supervisord -c /etc/supervisor/supervisord.conf"
     depends_on:
       - redis
-      - rabbitmq
       - db
 
   db:
@@ -60,11 +61,6 @@ services:
     restart: unless-stopped
     image: redis:8.0-rc1-alpine
 
-  rabbitmq:
-    image: rabbitmq:4.1-management
-    restart: unless-stopped
-    ports:
-      - "15672:15672" # Management UI
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
