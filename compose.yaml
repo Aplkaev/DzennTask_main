@@ -61,6 +61,19 @@ services:
     restart: unless-stopped
     image: redis:8.0-rc1-alpine
 
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: unless-stopped
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"    # AMQP протокол для PHP/Symfony
+      - "15672:15672"  # Web UI для админки
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
@@ -68,5 +81,6 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  rabbitmq_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
