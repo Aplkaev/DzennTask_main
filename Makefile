@@ -1,7 +1,7 @@
 APP_CONTAINER_NAME = bonushelp-app
 
 # Полный цикл: билд, ап, миграции
-init-ci: down build up
+init-ci: down build up network
 
 # Команды Docker Compose
 build:
@@ -12,6 +12,9 @@ up:
 
 down:
 	docker compose down --remove-orphans
+
+network:
+	docker network inspect dzenntask_rabbit >/dev/null 2>&1 || docker network create dzenntask_rabbit
 
 # Doctrine команды
 migrations-diff:

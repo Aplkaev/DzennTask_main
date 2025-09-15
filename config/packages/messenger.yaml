@@ -18,4 +18,4 @@ framework:
 
     routing:
     #   'App\Message\HighPriorityMessage': async_high
-    #   'App\Message\LowPriorityMessage': async_low
+       'App\Message\NotificationMessage': async_low

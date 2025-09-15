@@ -23,7 +23,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	gettext \
 	git \
 	supervisor \
-	&& rm -rf /var/lib/apt/lists/*
+    librabbitmq-dev \
+    libssl-dev \
+	&& rm -rf /var/lib/apt/lists/* \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 
 RUN set -eux; \
 	install-php-extensions \

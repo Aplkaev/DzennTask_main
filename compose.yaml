@@ -13,7 +13,7 @@ services:
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
       MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
-      # The two next lines can be removed after inietial installation
+      # w two next lines can be removed after inietial installation
       SYMFONY_VERSION: ${SYMFONY_VERSION:-}
       STABILITY: ${STABILITY:-stable}
     volumes:
@@ -66,6 +66,8 @@ services:
     container_name: rabbitmq
     hostname: rabbitmq
     restart: unless-stopped
+    networks:
+      - dzenntask_rabbit
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -82,5 +84,9 @@ volumes:
   caddy_data:
   caddy_config:
   rabbitmq_data:
+
+networks:
+  dzenntask_rabbit:
+    external: true
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
