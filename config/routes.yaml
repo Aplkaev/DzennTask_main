@@ -5,6 +5,10 @@ api:
     type: attribute
     prefix: /api
 
+api_graphql_entrypoint:
+    path: /graphql
+    controller: api_platform.graphql.action.entrypoint
+
 ### User auth
 login:
     path: /api/login

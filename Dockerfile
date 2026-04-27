@@ -44,7 +44,7 @@ RUN install-php-extensions pdo_pgsql
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Transport to use by Mercure (default to Bolt)
-ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
+# ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
