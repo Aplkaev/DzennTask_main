@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Enum\RoleEnum;
 use App\Repository\ProjectUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource]
 #[ORM\Entity(repositoryClass: ProjectUserRepository::class)]
 class ProjectUser extends BaseEntity
 {
