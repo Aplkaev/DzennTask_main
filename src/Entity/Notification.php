@@ -5,8 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[ApiResource]
+#[ApiResource(
+    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+)]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 class Notification extends BaseEntity
 {

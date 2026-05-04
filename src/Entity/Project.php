@@ -3,12 +3,42 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\GraphQl\Query;
+use ApiPlatform\Metadata\GraphQl\QueryCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_USER')"),
+
+        new Get(security: "is_granted('PROJECT_VIEW', object)"),
+        new Put(security: "is_granted('PROJECT_EDIT', object)"),
+        new Delete(security: "is_granted('PROJECT_DELETE', object)"),
+    ],
+
+    // === GraphQL операции ===
+    graphQlOperations: [
+        new QueryCollection(
+            name: 'collection_query',
+            security: "is_granted('ROLE_USER') or is_granted('IS_AUTHENTICATED_FULLY')",
+    ),
+        new Query(
+            name: 'item_query',
+            security: "is_granted('PROJECT_VIEW', object)"
+        ),
+    ]
+)]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project extends BaseEntity
 {
