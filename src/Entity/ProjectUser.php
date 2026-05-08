@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Enum\RoleEnum;
 use App\Repository\ProjectUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[ApiResource(
+    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+)]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: ProjectUserRepository::class)]
 class ProjectUser extends BaseEntity
 {

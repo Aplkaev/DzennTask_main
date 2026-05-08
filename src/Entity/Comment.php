@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Enum\AllEntityTypeEnum;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[ApiResource(
+    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+)]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment extends BaseEntity implements PublishableEventEntity
 {

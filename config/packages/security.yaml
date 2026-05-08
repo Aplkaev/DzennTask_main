@@ -25,6 +25,13 @@ security:
             jwt: ~
             logout:
                 path: api_token_logout
+        graphql:
+            pattern:   ^/graphql
+            stateless: true
+            provider: app_user_provider 
+            jwt: ~
+            logout:
+                path: api_token_logout
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -41,6 +48,7 @@ security:
             # switch_user: true
 
     access_control:
+        - { path: ^/graphql, roles: PUBLIC_ACCESS } 
         - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
