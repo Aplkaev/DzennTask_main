@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: KanbanColumnRepository::class)]
-class KanbanColumn extends BaseEntity
+class KanbanColumn extends BaseEntity implements PublishableEventEntity
 {
     #[ORM\Column(length: 255)]
     private string $name;
@@ -110,5 +110,16 @@ class KanbanColumn extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function toEventPayload(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'color' => $this->getColor(),
+            'position' => $this->getPosition(),
+            'project_id' => $this->getProject()->getId(),
+        ];
     }
 }

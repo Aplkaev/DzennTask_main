@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
-class Project extends BaseEntity
+class Project extends BaseEntity implements PublishableEventEntity
 {
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -150,4 +150,14 @@ class Project extends BaseEntity
 
     //     return $this;
     // }
+
+    public function toEventPayload(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'tag' => $this->getTag(),
+        ];
+    }
 }

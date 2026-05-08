@@ -7,7 +7,7 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-class Comment extends BaseEntity
+class Comment extends BaseEntity implements PublishableEventEntity
 {
     #[ORM\ManyToOne(inversedBy: 'content')]
     #[ORM\JoinColumn(nullable: false)]
@@ -83,5 +83,16 @@ class Comment extends BaseEntity
         $this->text = $text;
 
         return $this;
+    }
+
+    public function toEventPayload(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'author_id' => $this->getAuthor()->getId(),
+            'entity_type' => $this->getEntityType()->value,
+            'entity_id' => $this->getEntityId(),
+            'text' => $this->getText(),
+        ];
     }
 }

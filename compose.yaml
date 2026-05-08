@@ -67,8 +67,8 @@ services:
     container_name: rabbitmq
     hostname: rabbitmq
     restart: unless-stopped
-    networks:
-      - dzenntask_rabbit
+    # networks:
+    #   - dzenntask_rabbit
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest

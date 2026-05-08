@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl-dev \
 	&& rm -rf /var/lib/apt/lists/* \
     && pecl install amqp \
-    && docker-php-ext-enable amqp
+    && docker-php-ext-enable amqp \
+	&& docker-php-ext-install bcmath
 
 RUN set -eux; \
 	install-php-extensions \
@@ -44,7 +45,7 @@ RUN install-php-extensions pdo_pgsql
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Transport to use by Mercure (default to Bolt)
-ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
+# ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 

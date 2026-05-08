@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
-class Task extends BaseEntity
+class Task extends BaseEntity implements PublishableEventEntity
 {
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -181,5 +181,14 @@ class Task extends BaseEntity
         $this->kanbanColumn = $kanbanColumn;
 
         return $this;
+    }
+
+    public function toEventPayload(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'project_id' => $this->getProject()->getId(),
+        ];
     }
 }
