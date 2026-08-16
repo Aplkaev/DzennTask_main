@@ -8,8 +8,7 @@ class NotificationMessage
         public string $type,
         public string $name,
         public array $payload,
-        public string $userId
-    )
-    {
+        public string $userId,
+    ) {
     }
 }

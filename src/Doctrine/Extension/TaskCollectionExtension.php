@@ -14,14 +14,16 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final class TaskCollectionExtension implements QueryCollectionExtensionInterface
 {
-    public function __construct(private readonly Security $security) {}
+    public function __construct(private readonly Security $security)
+    {
+    }
 
     public function applyToCollection(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): void {
         if ($resourceClass !== Task::class) {
             return;
@@ -30,6 +32,7 @@ final class TaskCollectionExtension implements QueryCollectionExtensionInterface
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             $queryBuilder->andWhere('1 = 0');
+
             return;
         }
 
@@ -40,7 +43,7 @@ final class TaskCollectionExtension implements QueryCollectionExtensionInterface
         $rootAlias = $queryBuilder->getRootAliases()[0];
 
         $queryBuilder
-            ->innerJoin($rootAlias . '.project', 'task_project')
+            ->innerJoin($rootAlias.'.project', 'task_project')
             ->innerJoin('task_project.projectUsers', 'task_project_users')
             ->andWhere('task_project_users.user = :currentTaskUser')
             ->setParameter('currentTaskUser', $user);

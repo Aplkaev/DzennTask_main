@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
 #[ApiResource(
     security: "is_granted('IS_AUTHENTICATED_FULLY')",
     graphQlOperations: [

@@ -8,28 +8,30 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\Project;
-use App\Entity\ProjectUser;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final class ProjectQueryExtension implements QueryCollectionExtensionInterface
 {
-    public function __construct(private Security $security) {}
+    public function __construct(private Security $security)
+    {
+    }
 
     public function applyToCollection(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): void {
         if ($resourceClass !== Project::class) {
             return;
-        }  
+        }
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             $queryBuilder->andWhere('1 = 0');
+
             return;
         }
 
@@ -39,7 +41,7 @@ final class ProjectQueryExtension implements QueryCollectionExtensionInterface
         $joinAlreadyExists = false;
         foreach ($queryBuilder->getDQLPart('join') as $joins) {
             foreach ($joins as $join) {
-                if ($join->getJoin() === $rootAlias . '.projectUsers') {
+                if ($join->getJoin() === $rootAlias.'.projectUsers') {
                     $joinAlreadyExists = true;
                     break 2;
                 }
@@ -47,12 +49,12 @@ final class ProjectQueryExtension implements QueryCollectionExtensionInterface
         }
 
         if (!$joinAlreadyExists) {
-            $queryBuilder->innerJoin($rootAlias . '.projectUsers', 'pus');
+            $queryBuilder->innerJoin($rootAlias.'.projectUsers', 'pus');
         }
 
         $queryBuilder
             ->andWhere('pus.user = :currentUser')
             ->setParameter('currentUser', $user);
-    
+
     }
 }

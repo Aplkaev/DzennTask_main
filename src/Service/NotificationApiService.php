@@ -12,7 +12,7 @@ class NotificationApiService
     public function __construct(
         private readonly string $notificationBaseUrl,
         private readonly string $apiJwtToken,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
     ) {
         $this->client = new Client([
             'base_uri' => $this->notificationBaseUrl,
@@ -25,7 +25,7 @@ class NotificationApiService
         try {
             $response = $this->client->post('/api/notify', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiJwtToken,
+                    'Authorization' => 'Bearer '.$this->apiJwtToken,
                     'Accept'        => 'application/json',
                     'Content-Type'  => 'application/json',
                 ],
@@ -37,22 +37,21 @@ class NotificationApiService
             $this->logger->error('Notification API error', [
                 'exception' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
-
-
 
     public function readAll(string $userId): array
     {
         try {
             $response = $this->client->post('/api/read/all', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiJwtToken,
+                    'Authorization' => 'Bearer '.$this->apiJwtToken,
                     'Accept'        => 'application/json',
                     'Content-Type'  => 'application/json',
                 ],
-                'body' => ['user_id'=>$userId],
+                'body' => ['user_id' => $userId],
             ]);
 
             return $response->getBody();
@@ -60,21 +59,21 @@ class NotificationApiService
             $this->logger->error('Notification API error', [
                 'exception' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
-
 
     public function read(string $userId, string $messageId): array
     {
         try {
             $response = $this->client->post('/api/read/'.$messageId, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiJwtToken,
+                    'Authorization' => 'Bearer '.$this->apiJwtToken,
                     'Accept'        => 'application/json',
                     'Content-Type'  => 'application/json',
                 ],
-                'body' => ['user_id'=>$userId],
+                'body' => ['user_id' => $userId],
             ]);
 
             return $response->getBody();
@@ -82,6 +81,7 @@ class NotificationApiService
             $this->logger->error('Notification API error', [
                 'exception' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -91,7 +91,7 @@ class NotificationApiService
         try {
             $response = $this->client->get('/api/list', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiJwtToken,
+                    'Authorization' => 'Bearer '.$this->apiJwtToken,
                     'Accept'        => 'application/json',
                     'Content-Type'  => 'application/json',
                 ],
@@ -102,6 +102,7 @@ class NotificationApiService
             $this->logger->error('Notification API error', [
                 'exception' => $e->getMessage(),
             ]);
+
             return false;
         }
     }

@@ -2,15 +2,13 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\BaseEntity;
-use App\Entity\Task;
 use App\Entity\OutboxEvent;
 use App\Entity\PublishableEventEntity;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\EntityManagerInterface;
 
 #[AsDoctrineListener(event: Events::onFlush)]
 class EntitySubscriber implements EventSubscriber

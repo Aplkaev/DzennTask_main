@@ -36,7 +36,7 @@ class OutboxProcessor extends Command
 
                 $event->markProcessed();
             } catch (\Throwable $e) {
-                $output->writeln('Error: ' . $e->getMessage());
+                $output->writeln('Error: '.$e->getMessage());
             }
         }
 

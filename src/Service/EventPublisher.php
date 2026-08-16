@@ -3,16 +3,16 @@
 namespace App\Service;
 
 use App\Entity\OutboxEvent;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Channel\AMQPChannel;
 
 class EventPublisher
 {
     private AMQPChannel $channel;
 
     public function __construct(
-        AMQPStreamConnection $connection
+        AMQPStreamConnection $connection,
     ) {
         $this->channel = $connection->channel();
 
@@ -21,7 +21,7 @@ class EventPublisher
             type: 'topic',
             passive: false,
             durable: true,
-            auto_delete: false
+            // auto_delete: false
         );
     }
 

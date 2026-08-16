@@ -14,14 +14,16 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final class ProjectCollectionExtension implements QueryCollectionExtensionInterface
 {
-    public function __construct(private readonly Security $security) {}
+    public function __construct(private readonly Security $security)
+    {
+    }
 
     public function applyToCollection(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): void {
         if ($resourceClass !== Project::class) {
             return;
@@ -29,6 +31,7 @@ final class ProjectCollectionExtension implements QueryCollectionExtensionInterf
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             $queryBuilder->andWhere('1 = 0');
+
             return;
         }
 
@@ -38,7 +41,7 @@ final class ProjectCollectionExtension implements QueryCollectionExtensionInterf
         $joinAlreadyExists = false;
         foreach ($queryBuilder->getDQLPart('join') as $joins) {
             foreach ($joins as $join) {
-                if ($join->getJoin() === $rootAlias . '.projectUsers') {
+                if ($join->getJoin() === $rootAlias.'.projectUsers') {
                     $joinAlreadyExists = true;
                     break 2;
                 }
@@ -46,12 +49,11 @@ final class ProjectCollectionExtension implements QueryCollectionExtensionInterf
         }
 
         if (!$joinAlreadyExists) {
-            $queryBuilder->innerJoin($rootAlias . '.projectUsers', 'pus');
+            $queryBuilder->innerJoin($rootAlias.'.projectUsers', 'pus');
         }
 
         $queryBuilder
             ->andWhere('pus.user = :currentUser')
             ->setParameter('currentUser', $user);
     }
-    
 }

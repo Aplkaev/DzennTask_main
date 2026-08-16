@@ -18,7 +18,7 @@ final readonly class LoginSuccessHandler implements AuthenticationSuccessHandler
 
     public function onAuthenticationSuccess(
         Request $request,
-        TokenInterface $token
+        TokenInterface $token,
     ): ?JsonResponse {
         /** @var User $user */
         $user = $token->getUser();

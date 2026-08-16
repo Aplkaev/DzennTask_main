@@ -13,17 +13,17 @@ class TestContoller extends AbstractController
 {
     public function __construct(
         private MessageBusInterface $bus,
-    )
-    {
+    ) {
 
     }
-    #[Route('test',name: 'test')]
+
+    #[Route('test', name: 'test')]
     public function testAction(): JsonResponse
     {
         $this->bus->dispatch(new NotificationMessage(
             type: 'test',
             name: 'name_test',
-            payload:['body'=>'text'],
+            payload:['body' => 'text'],
             userId: 'user_id'
         ));
 

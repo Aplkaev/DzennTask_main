@@ -3,7 +3,6 @@
 namespace App\GraphQL\Resolver\User;
 
 use ApiPlatform\GraphQl\Resolver\QueryItemResolverInterface;
-use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class MeResolver implements QueryItemResolverInterface
