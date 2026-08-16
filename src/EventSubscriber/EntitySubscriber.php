@@ -39,7 +39,6 @@ class EntitySubscriber implements EventSubscriber
             if (!$entity instanceof PublishableEventEntity) {
                 continue;
             }
-
             $this->createEvent($em, $entity, 'updated');
         }
 
