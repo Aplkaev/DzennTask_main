@@ -5,10 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\GraphQl\DeleteMutation;
 use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\QueryCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Enum\Task\TaskStatusEnum;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,17 +22,29 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')",
-    graphQlOperations: [
-        new Query(),
-        new QueryCollection(),
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('TASK_CREATE', object)"),
 
-        new Mutation(name: 'create'),
-        new Mutation(name: 'update'),
-        new DeleteMutation(name: 'delete'),
+        new Get(security: "is_granted('TASK_VIEW', object)"),
+        new Put(security: "is_granted('TASK_EDIT', object)"),
+        new Delete(security: "is_granted('TASK_DELETE', object)"),
+    ],
+    graphQlOperations: [
+        new QueryCollection(),
+        new Query(security: "is_granted('TASK_VIEW', object)"),
+
+        new Mutation(name: 'create', securityPostDenormalize: "is_granted('TASK_CREATE', object)"),
+        new Mutation(name: 'update', security: "is_granted('TASK_EDIT', object)"),
+        new DeleteMutation(name: 'delete', security: "is_granted('TASK_DELETE', object)"),
     ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['project' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: [
+    'project' => 'exact',
+    'status' => 'exact',
+    'title' => 'partial',
+    'description' => 'partial',
+])]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task extends BaseEntity implements PublishableEventEntity

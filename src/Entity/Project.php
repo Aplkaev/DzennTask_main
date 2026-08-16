@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use ApiPlatform\Metadata\Post;
@@ -29,12 +30,26 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     // === GraphQL операции ===
     graphQlOperations: [
         new QueryCollection(
-            name: 'collection_query',
-            security: "is_granted('ROLE_USER') or is_granted('IS_AUTHENTICATED_FULLY')",
-    ),
+            security: "is_granted('ROLE_USER')",
+        ),
+
         new Query(
-            name: 'item_query',
-            security: "is_granted('PROJECT_VIEW', object)"
+            security: "is_granted('PROJECT_VIEW', object)",
+        ),
+
+        new Mutation(
+            name: 'create',
+            security: "is_granted('ROLE_USER')",
+        ),
+
+        new Mutation(
+            name: 'update',
+            security: "is_granted('PROJECT_EDIT', object)",
+        ),
+
+        new Mutation(
+            name: 'delete',
+            security: "is_granted('PROJECT_DELETE', object)",
         ),
     ]
 )]
