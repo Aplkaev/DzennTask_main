@@ -37,7 +37,7 @@ class Task extends BaseEntity implements PublishableEventEntity
 
     #[ORM\Column(length: 10000, nullable: true)]
     // description
-    private ?string $descrition = null;
+    private ?string $description = null;
 
     #[ORM\Column(enumType: TaskStatusEnum::class)]
     private ?TaskStatusEnum $status = null;
@@ -132,14 +132,14 @@ class Task extends BaseEntity implements PublishableEventEntity
         return $this;
     }
 
-    public function getDescrition(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descrition;
+        return $this->description;
     }
 
-    public function setDescrition(?string $descrition): static
+    public function setDescription(?string $description): static
     {
-        $this->descrition = $descrition;
+        $this->description = $description;
 
         return $this;
     }
