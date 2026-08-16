@@ -58,7 +58,7 @@ final class TaskDto extends BaseDto
         return new static(
             id: $model->getStringId(),
             title: $model->getTitle(),
-            description: $model->getDescrition(),
+            description: $model->getDescription(),
             status: $model->getStatus(),
             priority: $model->getPriority(),
             deadline: $model->getDeadline(),
