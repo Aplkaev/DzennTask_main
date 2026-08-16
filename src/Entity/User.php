@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GraphQl\Query;
+use App\GraphQL\Resolver\User\MeResolver;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,8 +13,18 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+    security: "is_granted('IS_AUTHENTICATED_FULLY')",
+    graphQlOperations: [
+        new Query(
+            name: 'me',
+            resolver: MeResolver::class,
+            args: [],
+            security: "is_granted('ROLE_USER')"
+        ),
+        new Query(),
+    ]
 )]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -30,6 +42,12 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $timezone = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $telegram = null;
 
     /**
      * @var Collection<int, Comment>
@@ -57,6 +75,30 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         $this->content = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->projectUsers = new ArrayCollection();
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getTelegram(): ?string
+    {
+        return $this->telegram;
+    }
+
+    public function setTelegram(?string $telegram): static
+    {
+        $this->telegram = $telegram;
+
+        return $this;
     }
 
     public function eraseCredentials(): void
