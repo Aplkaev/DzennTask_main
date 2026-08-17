@@ -53,7 +53,6 @@ class Task extends BaseEntity implements PublishableEventEntity
     private ?string $title = null;
 
     #[ORM\Column(length: 10000, nullable: true)]
-    // description
     private ?string $description = null;
 
     #[ORM\Column(enumType: TaskStatusEnum::class)]
@@ -227,6 +226,12 @@ class Task extends BaseEntity implements PublishableEventEntity
             'id' => $this->getId(),
             'title' => $this->getTitle(),
             'project_id' => $this->getProject()->getId(),
+            'assigned_to_id' => $this->getAssignedTo()?->getId(),
+            'status' => $this->getStatus()?->value,
+            'priority' => $this->getPriority(),
+            'story_points' => $this->getStoryPoints(),
+            'deadline' => $this->getDeadline()?->format(\DateTimeInterface::ATOM),
+            'description' => $this->getDescription(),
         ];
     }
 }
