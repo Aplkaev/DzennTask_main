@@ -101,14 +101,14 @@ class Task extends BaseEntity implements PublishableEventEntity
         return $this->comments;
     }
 
-    public function setAssgnedTo(?User $assignedTo): static
+    public function setAssignedTo(?User $assignedTo): static
     {
         $this->assignedTo = $assignedTo;
 
         return $this;
     }
 
-    public function getAssgnedTo(): ?User
+    public function getAssignedTo(): ?User
     {
         return $this->assignedTo;
     }

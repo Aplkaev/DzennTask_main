@@ -39,10 +39,10 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         $user = $this->userRepository->find($dto->assignedToId);
 
         $task = new Task();
-        $task->setAssgnedTo($user);
+        $task->setAssignedTo($user);
         $task->setProject($project);
         $task->setPriority($dto->priority);
-        $task->setDescrition($dto->description);
+        $task->setDescription($dto->description);
         $task->setTitle($dto->title);
         $task->setStatus($dto->status);
         $task->setStoryPoints($dto->storyPoints);
@@ -64,7 +64,7 @@ class TaskCrudUseCase extends AbstractCrudUseCase
         $this->verifyUserAccessToProjectUseCase->execute($dto->projectId);
 
         $task->setPriority($dto->priority);
-        $task->setDescrition($dto->description);
+        $task->setDescription($dto->description);
         $task->setTitle($dto->title);
         $task->setStatus($dto->status);
         $task->setStoryPoints($dto->storyPoints);

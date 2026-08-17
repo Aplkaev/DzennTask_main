@@ -64,7 +64,7 @@ final class TaskDto extends BaseDto
             deadline: $model->getDeadline(),
             storyPoints: $model->getStoryPoints(),
             parentId: $model->getParent()?->getStringId(),
-            assignedToId: $model->getAssgnedTo()->getStringId(),
+            assignedToId: $model->getAssignedTo()->getStringId(),
             projectId: $model->getProject()->getStringId()
         );
     }
