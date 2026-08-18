@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -46,6 +47,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     'title' => 'partial',
     'description' => 'partial',
 ])]
+#[ApiFilter(OrderFilter::class, properties: ['priority', 'deadline'])]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task extends BaseEntity implements PublishableEventEntity
