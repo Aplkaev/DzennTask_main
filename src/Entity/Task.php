@@ -42,6 +42,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[ApiFilter(SearchFilter::class, properties: [
     'project' => 'exact',
     'status' => 'exact',
+    'priority' => 'exact',
     'title' => 'partial',
     'description' => 'partial',
 ])]

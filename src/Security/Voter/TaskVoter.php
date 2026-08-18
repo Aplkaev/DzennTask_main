@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Security\Voter;
 
+use App\Entity\ProjectUser;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Enum\RoleEnum;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -32,16 +34,36 @@ class TaskVoter extends Voter
         /** @var Task $task */
         $task = $subject;
 
-        if ($user->getRoles() && in_array('ROLE_ADMIN', $user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             return true;
         }
 
+        $projectUser = $this->findProjectUser($task, $user);
+        if ($projectUser === null) {
+            return false;
+        }
+
+        // Создание задачи доступно любому участнику проекта — ограничение "видеть/управлять
+        // всеми задачами" касается уже существующих задач других людей, не создания своей.
+        if (self::CREATE === $attribute) {
+            return true;
+        }
+
+        if (RoleEnum::ROLE_OWNER === $projectUser->getRole()) {
+            return true;
+        }
+
+        return $task->getAssignedTo()?->getId() === $user->getId();
+    }
+
+    private function findProjectUser(Task $task, User $user): ?ProjectUser
+    {
         foreach ($task->getProject()->getProjectUsers() as $projectUser) {
             if ($projectUser->getUser()->getId() === $user->getId()) {
-                return true;
+                return $projectUser;
             }
         }
 
-        return false;
+        return null;
     }
 }

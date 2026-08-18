@@ -7,4 +7,5 @@ namespace App\Enum;
 enum RoleEnum: string
 {
     case ROLE_OWNER = 'role_owner';
+    case ROLE_MEMBER = 'role_member';
 }

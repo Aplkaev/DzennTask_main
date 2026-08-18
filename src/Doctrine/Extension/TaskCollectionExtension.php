@@ -9,6 +9,7 @@ use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Enum\RoleEnum;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -42,10 +43,17 @@ final class TaskCollectionExtension implements QueryCollectionExtensionInterface
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
 
+        // Владелец проекта (ROLE_OWNER) видит все задачи проекта, обычный участник
+        // (ROLE_MEMBER) — только те, что назначены на него.
         $queryBuilder
             ->innerJoin($rootAlias.'.project', 'task_project')
             ->innerJoin('task_project.projectUsers', 'task_project_users')
             ->andWhere('task_project_users.user = :currentTaskUser')
-            ->setParameter('currentTaskUser', $user);
+            ->andWhere($queryBuilder->expr()->orX(
+                'task_project_users.role = :ownerRole',
+                $rootAlias.'.assignedTo = :currentTaskUser',
+            ))
+            ->setParameter('currentTaskUser', $user)
+            ->setParameter('ownerRole', RoleEnum::ROLE_OWNER);
     }
 }
