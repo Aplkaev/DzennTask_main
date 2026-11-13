@@ -3,14 +3,28 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GraphQl\DeleteMutation;
+use ApiPlatform\Metadata\GraphQl\Mutation;
+use ApiPlatform\Metadata\GraphQl\Query;
+use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+// Уведомления создаёт система; пользователь может только читать свои, отмечать прочитанными и удалять.
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+    operations: [],
+    graphQlOperations: [
+        new QueryCollection(security: "is_granted('ROLE_USER')"),
+        new Query(security: "is_granted('ROLE_USER') and object.getUser().getId().equals(user.getId())"),
+        new Mutation(
+            name: 'update',
+            security: "is_granted('ROLE_USER') and object.getUser().getId().equals(user.getId())",
+            denormalizationContext: ['groups' => ['notification:update']],
+        ),
+        new DeleteMutation(name: 'delete', security: "is_granted('ROLE_USER') and object.getUser().getId().equals(user.getId())"),
+    ],
 )]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 class Notification extends BaseEntity
 {
@@ -25,6 +39,7 @@ class Notification extends BaseEntity
     private ?string $text = null;
 
     #[ORM\Column]
+    #[Groups(['notification:update'])]
     private ?bool $isRead = null;
 
     public function getUser(): User
@@ -63,7 +78,7 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    public function isRead(): ?bool
+    public function getIsRead(): ?bool
     {
         return $this->isRead;
     }

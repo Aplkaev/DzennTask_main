@@ -2,17 +2,34 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GraphQl\DeleteMutation;
+use ApiPlatform\Metadata\GraphQl\Mutation;
+use ApiPlatform\Metadata\GraphQl\Query;
+use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use App\Repository\KanbanColumnRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+    operations: [],
+    graphQlOperations: [
+        new QueryCollection(security: "is_granted('ROLE_USER')"),
+        new Query(security: "is_granted('PROJECT_VIEW', object.getProject())"),
+        new Mutation(
+            name: 'create',
+            securityPostDenormalize: "is_granted('PROJECT_EDIT', object.getProject())",
+        ),
+        new Mutation(
+            name: 'update',
+            security: "is_granted('PROJECT_EDIT', object.getProject())",
+            securityPostDenormalize: "is_granted('PROJECT_EDIT', object.getProject())",
+        ),
+        new DeleteMutation(name: 'delete', security: "is_granted('PROJECT_EDIT', object.getProject())"),
+    ],
 )]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: KanbanColumnRepository::class)]
 class KanbanColumn extends BaseEntity implements PublishableEventEntity
 {
@@ -33,6 +50,7 @@ class KanbanColumn extends BaseEntity implements PublishableEventEntity
      * @var Collection<int, Task>
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'kanbanColumn', orphanRemoval: true)]
+    #[ApiProperty(writable: false)]
     private Collection $tasks;
 
     public function __construct()

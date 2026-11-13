@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Operation;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final class ProjectCollectionExtension implements QueryCollectionExtensionInterface
@@ -54,6 +55,6 @@ final class ProjectCollectionExtension implements QueryCollectionExtensionInterf
 
         $queryBuilder
             ->andWhere('pus.user = :currentUser')
-            ->setParameter('currentUser', $user);
+            ->setParameter('currentUser', $user->getId(), UuidType::NAME);
     }
 }

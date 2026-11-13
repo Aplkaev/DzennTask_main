@@ -2,21 +2,37 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GraphQl\DeleteMutation;
+use ApiPlatform\Metadata\GraphQl\Mutation;
+use ApiPlatform\Metadata\GraphQl\Query;
+use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use App\Enum\AllEntityTypeEnum;
 use App\Repository\CommentRepository;
+use App\State\Comment\CommentCreateProcessor;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')"
+    operations: [],
+    graphQlOperations: [
+        new QueryCollection(security: "is_granted('ROLE_USER')"),
+        new Query(security: "is_granted('ROLE_USER') and object.getAuthor().getId().equals(user.getId())"),
+        new Mutation(
+            name: 'create',
+            security: "is_granted('ROLE_USER')",
+            processor: CommentCreateProcessor::class,
+        ),
+        new Mutation(name: 'update', security: "is_granted('ROLE_USER') and object.getAuthor().getId().equals(user.getId())"),
+        new DeleteMutation(name: 'delete', security: "is_granted('ROLE_USER') and object.getAuthor().getId().equals(user.getId())"),
+    ],
 )]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment extends BaseEntity implements PublishableEventEntity
 {
     #[ORM\ManyToOne(inversedBy: 'content')]
     #[ORM\JoinColumn(nullable: false)]
+    #[ApiProperty(writable: false)]
     private User $author;
 
     #[ORM\Column(enumType: AllEntityTypeEnum::class)]

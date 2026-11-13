@@ -6,37 +6,33 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\GraphQl\DeleteMutation;
 use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\QueryCollection;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Enum\Task\TaskStatusEnum;
 use App\Repository\TaskRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\State\Task\TaskWriteProcessor;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Post(securityPostDenormalize: "is_granted('TASK_CREATE', object)"),
-
-        new Get(security: "is_granted('TASK_VIEW', object)"),
-        new Put(security: "is_granted('TASK_EDIT', object)"),
-        new Delete(security: "is_granted('TASK_DELETE', object)"),
-    ],
+    operations: [],
     graphQlOperations: [
-        new QueryCollection(),
+        new QueryCollection(security: "is_granted('ROLE_USER')"),
         new Query(security: "is_granted('TASK_VIEW', object)"),
 
-        new Mutation(name: 'create', securityPostDenormalize: "is_granted('TASK_CREATE', object)"),
-        new Mutation(name: 'update', security: "is_granted('TASK_EDIT', object)"),
+        new Mutation(
+            name: 'create',
+            securityPostDenormalize: "is_granted('TASK_CREATE', object)",
+            processor: TaskWriteProcessor::class,
+        ),
+        // security — права на задачу до изменений, securityPostDenormalize — что её не перенесли в чужой проект
+        new Mutation(
+            name: 'update',
+            security: "is_granted('TASK_EDIT', object)",
+            securityPostDenormalize: "is_granted('PROJECT_VIEW', object.getProject())",
+            processor: TaskWriteProcessor::class,
+        ),
         new DeleteMutation(name: 'delete', security: "is_granted('TASK_DELETE', object)"),
     ],
 )]
@@ -48,7 +44,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     'description' => 'partial',
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['priority', 'deadline'])]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task extends BaseEntity implements PublishableEventEntity
 {
@@ -79,29 +74,9 @@ class Task extends BaseEntity implements PublishableEventEntity
     #[ORM\ManyToOne]
     private ?User $assignedTo = null;
 
-    #[ORM\OneToMany(mappedBy: 'task', targetEntity: Comment::class)]
-    private Collection $comments;
-
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: true)]
     private ?KanbanColumn $kanbanColumn = null;
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
-
-    public function addComments(Comment $comment): static
-    {
-        $this->comments->add($comment);
-
-        return $this;
-    }
-
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
 
     public function setAssignedTo(?User $assignedTo): static
     {

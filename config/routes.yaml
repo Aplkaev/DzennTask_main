@@ -1,19 +1,4 @@
-api:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-    prefix: /api
-
+# Всё API — GraphQL (API Platform). Вход/регистрация — мутации loginUser / registerUser.
 api_graphql_entrypoint:
     path: /graphql
     controller: api_platform.graphql.action.entrypoint
-
-### User auth
-login:
-    path: /api/login
-
-token_refresh:
-    path: /api/token/refresh
-
-#############################

@@ -10,50 +10,24 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-        login:
-            pattern: ^/api/login
-            stateless: true
-            provider: app_user_provider 
-            json_login:
-                check_path: /api/login
-                success_handler: App\Security\LoginSuccessHandler
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-                
-        api:
-            pattern:   ^/api
-            stateless: true
-            provider: app_user_provider 
-            jwt: ~
-            logout:
-                path: api_token_logout
-        graphql:
-            pattern:   ^/graphql
-            stateless: true
-            provider: app_user_provider 
-            jwt: ~
-            logout:
-                path: api_token_logout
-
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        # Всё API — GraphQL. Без токена запрос анонимный: доступ решает security у каждой операции
+        # (loginUser / registerUser открыты, остальное требует ROLE_USER и voters).
+        graphql:
+            pattern: ^/(doc/)?graphql
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
 
         main:
             lazy: true
             provider: users_in_memory
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
     access_control:
-        - { path: ^/graphql, roles: PUBLIC_ACCESS } 
-        - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/(doc/)?graphql, roles: PUBLIC_ACCESS }
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

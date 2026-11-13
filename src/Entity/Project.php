@@ -2,32 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\GraphQl\DeleteMutation;
 use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\QueryCollection;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+use App\Enum\RoleEnum;
 use App\Repository\ProjectRepository;
+use App\State\Project\ProjectCreateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Post(security: "is_granted('ROLE_USER')"),
-
-        new Get(security: "is_granted('PROJECT_VIEW', object)"),
-        new Put(security: "is_granted('PROJECT_EDIT', object)"),
-        new Delete(security: "is_granted('PROJECT_DELETE', object)"),
-    ],
-
-    // === GraphQL операции ===
+    operations: [],
     graphQlOperations: [
         new QueryCollection(
             security: "is_granted('ROLE_USER')",
@@ -40,6 +29,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
         new Mutation(
             name: 'create',
             security: "is_granted('ROLE_USER')",
+            processor: ProjectCreateProcessor::class,
         ),
 
         new Mutation(
@@ -47,13 +37,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
             security: "is_granted('PROJECT_EDIT', object)",
         ),
 
-        new Mutation(
+        new DeleteMutation(
             name: 'delete',
-            security: "is_granted('PROJECT_DELETE', object)",
+            security: "is_granted('PROJECT_MANAGE', object)",
         ),
     ]
 )]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project extends BaseEntity implements PublishableEventEntity
 {
@@ -69,13 +58,15 @@ class Project extends BaseEntity implements PublishableEventEntity
     /**
      * @var Collection<int, ProjectUser>
      */
-    #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'project', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'project', cascade: ['persist'], orphanRemoval: true)]
+    #[ApiProperty(writable: false)]
     private Collection $projectUsers;
 
     /**
      * @var Collection<int, KanbanColumn>
      */
     #[ORM\OneToMany(targetEntity: KanbanColumn::class, mappedBy: 'project')]
+    #[ApiProperty(writable: false)]
     private Collection $kanbanColumns;
 
     public function __construct()
@@ -144,6 +135,27 @@ class Project extends BaseEntity implements PublishableEventEntity
     public function getProjectUsers(): Collection
     {
         return $this->projectUsers;
+    }
+
+    public function findProjectUser(User $user): ?ProjectUser
+    {
+        foreach ($this->projectUsers as $projectUser) {
+            if ($projectUser->getUser()->getId()->equals($user->getId())) {
+                return $projectUser;
+            }
+        }
+
+        return null;
+    }
+
+    public function isMember(User $user): bool
+    {
+        return $this->findProjectUser($user) !== null;
+    }
+
+    public function isOwner(User $user): bool
+    {
+        return $this->findProjectUser($user)?->getRole() === RoleEnum::ROLE_OWNER;
     }
 
     public function addProjectUser(ProjectUser $projectUser): static

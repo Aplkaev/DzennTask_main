@@ -14,10 +14,12 @@ class ProjectVoter extends Voter
     public const VIEW   = 'PROJECT_VIEW';
     public const EDIT   = 'PROJECT_EDIT';
     public const DELETE = 'PROJECT_DELETE';
+    // Управление проектом целиком: удаление, участники. Только владелец.
+    public const MANAGE = 'PROJECT_MANAGE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::VIEW, self::EDIT, self::DELETE])
+        return in_array($attribute, [self::VIEW, self::EDIT, self::DELETE, self::MANAGE], true)
             && $subject instanceof Project;
     }
 
@@ -31,17 +33,13 @@ class ProjectVoter extends Voter
         /** @var Project $project */
         $project = $subject;
 
-        if ($user->getRoles() && in_array('ROLE_ADMIN', $user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             return true;
         }
 
-        foreach ($project->getProjectUsers() as $projectUser) {
-            if ($projectUser->getUser()->getId() === $user->getId()) {
-
-                return true;
-            }
-        }
-
-        return false;
+        return match ($attribute) {
+            self::DELETE, self::MANAGE => $project->isOwner($user),
+            default => $project->isMember($user),
+        };
     }
 }

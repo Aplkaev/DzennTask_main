@@ -2,19 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Query;
+use App\GraphQL\Resolver\User\LoginResolver;
 use App\GraphQL\Resolver\User\MeResolver;
+use App\GraphQL\Resolver\User\RegisterResolver;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    security: "is_granted('IS_AUTHENTICATED_FULLY')",
+    operations: [],
     graphQlOperations: [
         new Query(
             name: 'me',
@@ -22,51 +27,98 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
             args: [],
             security: "is_granted('ROLE_USER')"
         ),
-        new Query(),
+        new Query(security: "is_granted('ROLE_ADMIN') or object == user"),
+
+        new Mutation(
+            name: 'update',
+            security: 'object == user',
+            denormalizationContext: ['groups' => ['user:update']],
+        ),
+        new Mutation(
+            name: 'login',
+            resolver: LoginResolver::class,
+            read: false,
+            validate: false,
+            write: false,
+            denormalizationContext: ['groups' => ['user:auth']],
+        ),
+        new Mutation(
+            name: 'register',
+            resolver: RegisterResolver::class,
+            read: false,
+            denormalizationContext: ['groups' => ['user:auth']],
+            validationContext: ['groups' => ['user:register']],
+        ),
     ]
 )]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(length: 255)]
+    #[Groups(['user:auth'])]
+    #[Assert\NotBlank(groups: ['user:register'])]
+    #[Assert\Email(groups: ['user:register'])]
     private string $email;
 
     #[ORM\Column(length: 255)]
+    #[ApiProperty(readable: false, writable: false)]
     private string $password;
 
+    /**
+     * Пароль в открытом виде — только вход для loginUser/registerUser, в БД не хранится.
+     */
+    #[ApiProperty(readable: false)]
+    #[Groups(['user:auth'])]
+    #[Assert\NotBlank(groups: ['user:register'])]
+    #[Assert\Length(min: 6, groups: ['user:register'])]
+    private ?string $plainPassword = null;
+
+    /**
+     * JWT — заполняется только в ответе loginUser/registerUser, в БД не хранится.
+     */
+    #[ApiProperty(writable: false)]
+    private ?string $token = null;
+
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user:update'])]
     private ?string $avatarUrl = null;
 
     #[ORM\Column(length: 64, nullable: true)]
+    #[Groups(['user:update'])]
     private ?string $timezone = null;
 
     #[ORM\Column(length: 64, nullable: true)]
+    #[Groups(['user:update'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 64, nullable: true)]
+    #[Groups(['user:update'])]
     private ?string $telegram = null;
 
     /**
      * @var Collection<int, Comment>
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author', orphanRemoval: true)]
+    #[ApiProperty(readable: false, writable: false)]
     private Collection $content;
 
     /**
      * @var Collection<int, Notification>
      */
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ApiProperty(readable: false, writable: false)]
     private Collection $notifications;
 
     /**
      * @var Collection<int, ProjectUser>
      */
-    #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'u', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ApiProperty(readable: false, writable: false)]
     private Collection $projectUsers;
 
     #[ORM\Column(type: 'json')]
+    #[ApiProperty(readable: false, writable: false)]
     private array $roles = [];
 
     public function __construct()
@@ -102,6 +154,31 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
 
     public function eraseCredentials(): void
     {
+        $this->plainPassword = null;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): static
+    {
+        $this->token = $token;
+
+        return $this;
     }
 
     public function getRoles(): array
@@ -119,6 +196,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         return $this;
     }
 
+    #[ApiProperty(readable: false)]
     public function getUserIdentifier(): string
     {
         return (string) mb_strtolower($this->email);

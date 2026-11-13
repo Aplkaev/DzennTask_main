@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Security\Voter;
 
-use App\Entity\ProjectUser;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\RoleEnum;
@@ -38,7 +37,7 @@ class TaskVoter extends Voter
             return true;
         }
 
-        $projectUser = $this->findProjectUser($task, $user);
+        $projectUser = $task->getProject()->findProjectUser($user);
         if ($projectUser === null) {
             return false;
         }
@@ -53,17 +52,6 @@ class TaskVoter extends Voter
             return true;
         }
 
-        return $task->getAssignedTo()?->getId() === $user->getId();
-    }
-
-    private function findProjectUser(Task $task, User $user): ?ProjectUser
-    {
-        foreach ($task->getProject()->getProjectUsers() as $projectUser) {
-            if ($projectUser->getUser()->getId() === $user->getId()) {
-                return $projectUser;
-            }
-        }
-
-        return null;
+        return $task->getAssignedTo()?->getId()->equals($user->getId()) ?? false;
     }
 }

@@ -11,6 +11,7 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\RoleEnum;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final class TaskCollectionExtension implements QueryCollectionExtensionInterface
@@ -53,7 +54,7 @@ final class TaskCollectionExtension implements QueryCollectionExtensionInterface
                 'task_project_users.role = :ownerRole',
                 $rootAlias.'.assignedTo = :currentTaskUser',
             ))
-            ->setParameter('currentTaskUser', $user)
+            ->setParameter('currentTaskUser', $user->getId(), UuidType::NAME)
             ->setParameter('ownerRole', RoleEnum::ROLE_OWNER);
     }
 }
