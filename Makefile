@@ -1,7 +1,5 @@
-APP_CONTAINER_NAME = bonushelp-app
-
 # Полный цикл: билд, ап, миграции
-init-ci: down build up network
+init-ci: down network build up
 
 # Команды Docker Compose
 build:
@@ -14,8 +12,8 @@ down:
 	docker compose down --remove-orphans
 
 network:
-	docker network inspect dzenntask_rabbit >/dev/null 2>&1 || docker network create dzenntask_rabbit
-
+	@docker network inspect dzenntask_network >/dev/null 2>&1 || \
+		docker network create dzenntask_network
 # Doctrine команды
 migrations-diff:
 	docker compose exec php php bin/console doctrine:migrations:diff
